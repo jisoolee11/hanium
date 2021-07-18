@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from pyzbar.pyzbar import decode
+
 configuration_path = "./cfg/yolov3.cfg"
 weights_path = "./yolov3.weights"
 
@@ -33,6 +35,10 @@ ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/barcode')
+def barcode():
+  return render_template('barcode.html')
 
 @app.route('/')
 def index():
