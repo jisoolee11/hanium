@@ -15,36 +15,6 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function () {
-            barcode_list();
-        });
-
-        function barcode_list() {
-            $.ajax({
-                type: "GET",
-                url: "../food.json",
-                data: {},
-                success: function (response) {
-                    let rows = response['food'];
-                    for (let i = 0; i < rows.length; i++) {
-                        let barcode = rows[i]['barcode'];
-                        let name = rows[i]['name'];
-                        let cal = rows[i]['cal'];
-                        let fat = rows[i]['fat'];
-                        
-                        let temp_html = `<tr>
-                                        <td>${barcode}</td>
-                                        <td>${name}</td>
-                                        <td>${cal}</td>
-                                        <td>${fat}</td>
-                                    </tr>`;
-                        $('#cards-box').append(temp_html);
-                    }
-                }
-            })
-        }
-    </script>
 </head>
 
 <body>

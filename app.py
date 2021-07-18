@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 from pyzbar.pyzbar import decode
+import json
 
 configuration_path = "./cfg/yolov3.cfg"
 weights_path = "./yolov3.weights"
@@ -36,9 +37,25 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/barcode')
+def html(content):  # Also allows you to set your own <head></head> etc
+   return '<html><head></head><body>' + content + '</body></html>'
+
+@app.route('/barcode', methods=['GET'])
 def barcode():
-  return render_template('barcode.html')
+    with open('./food.json', 'r') as f:
+        json_data = json.load(f)
+    print(json.dumps(json_data, indent='\t'))
+
+    rows = json_data['food']
+    for i in range(0, len(rows)):
+        barcode = rows[i]['barcode']
+        if barcode == '885225566': # barcode.py와 합치기
+            name = rows[i]['name']
+            cal = rows[i]['cal']
+            fat = rows[i]['fat']
+            print(barcode, name, cal, fat)
+            return jsonify({'barcode':barcode, 'name':name, 'cal':cal, 'fat':fat})
+    return html('일치하는 바코드 번호가 없습니다. <a href="/">메인페이지로 돌아가기</a>')
 
 @app.route('/')
 def index():
