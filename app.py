@@ -180,7 +180,8 @@ def predict():
                 # plt.show()
                 #plt.savefig('static/images/plot.jpg')
                 
-                return render_template('predict.html', product = list(set(objects)), user_image = 'images/output/' + filename)
+                
+                return render_template('predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
