@@ -26,7 +26,6 @@ layers_names_output = [layers_names_all[i[0] - 1] for i in network.getUnconnecte
 # Check point
 
 
-
 app = Flask(__name__)
 
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
@@ -42,7 +41,7 @@ def html(content):  # Also allows you to set your own <head></head> etc
 
 @app.route('/barcode', methods=['GET'])
 def barcode():
-    with open('./food.json', 'r') as f:
+    with open('./static/food.json', 'r') as f:
         json_data = json.load(f)
     print(json.dumps(json_data, indent='\t'))
 
@@ -63,7 +62,19 @@ def index():
 
 @app.route('/camera')
 def camera():
-  return render_template('camera.html')
+  return render_template('cam.html')
+
+# @app.route('/camera', methods=['GET', 'POST'])
+# def camera():
+#     if request.method == 'POST':
+#         name = request.args.get('name')
+#         image_url = request.form['imageString']
+#         print(image_url)
+
+#         file_path = os.path.join('./static/images/input', image_url)
+#         image_url.save(file_path)
+#         return render_template('camera.html', user_image = 'images/output/' + image_url)
+#     return render_template('cam.html')
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
