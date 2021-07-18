@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>barcode recognize</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            barcode_list();
+        });
+
+        function barcode_list() {
+            $.ajax({
+                type: "GET",
+                url: "../food.json",
+                data: {},
+                success: function (response) {
+                    let rows = response['food'];
+                    for (let i = 0; i < rows.length; i++) {
+                        let barcode = rows[i]['barcode'];
+                        let name = rows[i]['name'];
+                        let cal = rows[i]['cal'];
+                        let fat = rows[i]['fat'];
+                        
+                        let temp_html = `<tr>
+                                        <td>${barcode}</td>
+                                        <td>${name}</td>
+                                        <td>${cal}</td>
+                                        <td>${fat}</td>
+                                    </tr>`;
+                        $('#cards-box').append(temp_html);
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <h1>barcode</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>바코드</td>
+                <td>이름</td>
+                <td>칼로리</td>
+                <td>지방</td>
+            </tr>
+        </thead>
+        <tbody id="cards-box">
+        </tbody>
+    </table>
+</body>
+
+</html>
