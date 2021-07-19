@@ -114,7 +114,7 @@ def predict():
                 print('YOLO v3 took {:.5f} seconds'.format(end - start))
                 np.random.seed(42)
                 # randint(low, high=None, size=None, dtype='l')
-                colours = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+                colors = np.random.randint(0, 255, size=(len(labels), 3))
                 
                 # Check point
                 
@@ -163,7 +163,7 @@ def predict():
                         x_min, y_min = bounding_boxes[i][0], bounding_boxes[i][1]
                         box_width, box_height = bounding_boxes[i][2], bounding_boxes[i][3]
                 
-                        colour_box_current = [int(j) for j in colours[class_numbers[i]]]
+                        colour_box_current = [int(j) for j in colors[class_numbers[i]]]
                 
                         cv2.rectangle(image_input, (x_min, y_min), (x_min + box_width, y_min + box_height),
                                         colour_box_current, 5)
@@ -173,15 +173,16 @@ def predict():
                 
                         cv2.putText(image_input, text_box_current, (x_min, y_min - 7), cv2.FONT_HERSHEY_SIMPLEX,
                                     1.5, colour_box_current, 5)
-                plt.rcParams['figure.figsize'] = (10.0, 10.0)
-                image_output = cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB)
-                # plt.imshow(cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB))       
-                cv2.imwrite('./static/images/output/' + filename , image_output)
+                # plt.rcParams['figure.figsize'] = (10.0, 10.0)
+                # image_output = cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB)
+                # cv2.imshow(image_output)     
+                cv2.imwrite('./static/images/output/' + filename , image_input)
                 # plt.show()
                 #plt.savefig('static/images/plot.jpg')
                 
                 
                 return render_template('predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
+                # return render_template('predict.html', products = list(set(objects)), user_image = filename)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
