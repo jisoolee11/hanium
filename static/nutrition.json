@@ -19,6 +19,36 @@
         "fat": 0.2,
         "cholesterol": 0,
         "protein": 0.3
+    },
+    {
+        "id": 2,
+        "name": "orange",
+        "calories": 44,
+        "sodium": 1,
+        "carbohydrate": 10,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 0.7
+    },
+    {
+        "id": 3,
+        "name": "broccoli",
+        "calories": 33,
+        "sodium": 33,
+        "carbohydrate": 7,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 2.8
+    },
+    {
+        "id": 4,
+        "name": "carrot",
+        "calories": 41,
+        "sodium": 69,
+        "carbohydrate": 10,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 0.9
     }
 ]
 }
