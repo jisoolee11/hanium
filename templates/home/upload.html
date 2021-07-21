@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Caloire 4 Diet</title>
+
+  <!-- font -->
+  <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous">
+  </script>
+
+  <style>
+      * {
+            font-family: 'Sunflower', sans-serif;
+        }
+
+      .title {
+          text-align: center;
+          font-size: 50px;
+      }
+
+      .col-sm {
+          padding: 50px;
+      }
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <div class="title">
+            <img src="../static/images/logo_example.png" alt="logo_example" width="100" height="100">
+            Image Detection with yolo3</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signin">Signin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="col-sm">
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" id="file" name="file" />
+        <button type=button onclick='test()'>Display</button>
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
+
+<script>
+    function test() {
+        var file = document.getElementById('file').files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var image = document.createElement("img");
+          image.src = e.target.result;
+          document.body.appendChild(image);
+        }
+        reader.readAsDataURL(file);
+    }
+</script>
+</body>
+
+</html>
