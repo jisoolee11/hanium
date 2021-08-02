@@ -6,6 +6,12 @@ import matplotlib.pyplot as plt
 import time
 from pyzbar.pyzbar import decode
 import json
+import time
+
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+db = client.hanium
 
 app = Blueprint('app', __name__)
 
@@ -43,28 +49,54 @@ def html(content):  # Also allows you to set your own <head></head> etc
 
 @app.route('/barcode', methods=['GET'])
 def barcode():
-    with open('./static/food.json', 'r') as f:
-        json_data = json.load(f)
-    print(json.dumps(json_data, indent='\t'))
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 640)
+    cap.set(4, 480)
+    used_codes = []
 
-    rows = json_data['food']
-    for i in range(0, len(rows)):
-        barcode = rows[i]['barcode']
-        if barcode == '885225566': # barcode.py와 합치기
-            name = rows[i]['name']
-            cal = rows[i]['cal']
-            fat = rows[i]['fat']
-            print(barcode, name, cal, fat)
-            return jsonify({'barcode':barcode, 'name':name, 'cal':cal, 'fat':fat})
-    return html('일치하는 바코드 번호가 없습니다. <a href="/home">메인페이지로 돌아가기</a>')
+    camera = True
+    while camera == True:
+        success, frame = cap.read()
+
+        for code in decode(frame):
+            if code.data.decode('utf-8') not in used_codes:
+                print('Approved')
+                barcode_num = code.data.decode('utf-8')
+                print(barcode_num)
+                used_codes.append(barcode_num)
+                time.sleep(5)
+
+                # 추가
+                product = db.barcode.find_one({'barcode': barcode_num})
+                print(product)
+                name = product['name']
+                calories = product['calories(kcal)']
+                sodium = product['sodium(mg)']
+                carbohydrate = product['carbohydrate(g)']
+                fat = product['fat(g)']
+                cholesterol = product['cholesterol(mg)']
+                protein = product['protein(g)']
+                print(name, calories, sodium, carbohydrate, fat, cholesterol, protein)
+                return render_template('home/barcode.html', name=name, calories=calories, sodium=sodium,
+                                        carbohydrate=carbohydrate, fat=fat, cholesterol=cholesterol, protein=protein)
+                # 추가
+
+            elif code.data.decode('utf-8') in used_codes:
+                print('Sorry, this code has been already used')
+                time.sleep(5)
+            else:
+                return html('일치하는 바코드 번호가 없습니다. <a href="/home">메인페이지로 돌아가기</a>')
+
+        cv2.imshow('Testing-code-scan', frame)
+        cv2.waitKey(1)
 
 @app.route('/home')
 def index():
-  return render_template('home/index.html')
+    return render_template('home/index.html')
 
 @app.route('/camera')
 def camera():
-  return render_template('home/cam.html')
+    return render_template('home/cam.html')
 
 # @app.route('/camera', methods=['GET', 'POST'])
 # def camera():
