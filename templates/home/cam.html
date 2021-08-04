@@ -18,6 +18,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous">
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
     
     <style>
         * {
@@ -60,6 +63,7 @@
     <video id="video" width="640" height="480" autoplay></video>
     <button id="snap">Snap Photo</button>
     <canvas id="canvas" width="640" height="480"></canvas>
+    <button id="button">Take Image</button>
 </body>
 <script>
     var video = document.getElementById('video');
@@ -82,14 +86,24 @@
     document.getElementById("snap").addEventListener("click", function () {
         context.drawImage(video, 0, 0, 640, 480);
         // get image data as string
-        const imageString = canvas.toDataURL();
+        // const imageString = canvas.toDataURL();
         // console.log("imageString: ", imageString)
         // send image to server
+        // sitename_bytes = base64.b64decode(imageString)
+        // sitename = sitename_bytes .decode('ascii')
+        // console.log(sitename)
 
-        var url = imageString.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-        window.open(url);
+        // var url = imageString.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+        // window.open(url);
     });
 
+    $(document).ready(function(){
+        $("#button").click(function(){
+            domtoimage.toBlob(document.getElementById('canvas')).then(function(blob){
+                window.saveAs(blob, "static/images/input/camera.jpg")
+            })
+        })
+    })
 </script>
 
 </html>
