@@ -42,6 +42,17 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
+@app.route('/record')
+def food_record():
+    foods = list(db.person.find({},{'_id':False}))
+
+    food_list = []
+    for food in foods:
+        food_name = food['name']
+        food = db.food.find_one({'name': food_name})
+        food_list.append(food)
+    return render_template('home/record.html', food_list=food_list)
+
 @app.route('/barcode', methods=['GET'])
 def barcode():
     cap = cv2.VideoCapture(0)
