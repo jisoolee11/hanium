@@ -100,7 +100,8 @@
     $(document).ready(function(){
         $("#button").click(function(){
             domtoimage.toBlob(document.getElementById('canvas')).then(function(blob){
-                window.saveAs(blob, "static/images/input/camera.jpg")
+                window.saveAs(blob, "camera.jpg")
+                window.location.href = "{{url_for('app.upload')}}"
             })
         })
     })
