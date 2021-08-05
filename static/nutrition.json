@@ -1,0 +1,54 @@
+{
+    "nutrition": [
+    {
+        "id": 0,
+        "name": "banana",
+        "calories": 89,
+        "sodium": 1,
+        "carbohydrate": 23,
+        "fat": 0.3,
+        "cholesterol": 0,
+        "protein": 1.1
+    },
+    {
+        "id": 1,
+        "name": "apple",
+        "calories": 52,
+        "sodium": 1,
+        "carbohydrate": 14,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 0.3
+    },
+    {
+        "id": 2,
+        "name": "orange",
+        "calories": 44,
+        "sodium": 1,
+        "carbohydrate": 10,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 0.7
+    },
+    {
+        "id": 3,
+        "name": "broccoli",
+        "calories": 33,
+        "sodium": 33,
+        "carbohydrate": 7,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 2.8
+    },
+    {
+        "id": 4,
+        "name": "carrot",
+        "calories": 41,
+        "sodium": 69,
+        "carbohydrate": 10,
+        "fat": 0.2,
+        "cholesterol": 0,
+        "protein": 0.9
+    }
+]
+}
