@@ -100,8 +100,7 @@ def barcode():
                 fat = product['fat']
                 cholesterol = product['cholesterol']
                 protein = product['protein']
-
-                # db.person.insert_one(product)
+                
                 return render_template('home/barcode.html', name=name, calories=calories, sodium=sodium,
                                         carbohydrate=carbohydrate, fat=fat, cholesterol=cholesterol, protein=protein)
 
@@ -207,13 +206,13 @@ def predict():
                                     1.5, colour_box_current, 5)   
                 cv2.imwrite('./static/images/output/' + filename , image_input)
 
-                # products = list(set(objects))
+                products = list(set(objects))
                 # print(products)
                 # for product in products:
                 #     food = db.food.find_one({'name': product})
                 #     db.person.insert_one(food)
                     
-                return render_template('home/predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
+                return render_template('home/predict.html', products = products, user_image = 'images/output/' + filename)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
