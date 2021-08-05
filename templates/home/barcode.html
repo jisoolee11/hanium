@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <a href="{{url_for('app.index')}}">메인페이지 바로가기</a> <br>
+
     <table>
         <tr>
             <th>name</th>
@@ -16,31 +18,29 @@
         </tr>
         <tr>
             <th>calories</th>
-            <td>{{calories}}</td>
+            <td>{{calories}}(kcal)</td>
         </tr>
         <tr>
             <th>sodium</th>
-            <td>{{sodium}}</td>
+            <td>{{sodium}}(mg)</td>
         </tr>
         <tr>
             <th>carbohydrate</th>
-            <td>{{carbohydrate}}</td>
+            <td>{{carbohydrate}}(g)</td>
         </tr>
         <tr>
             <th>fat</th>
-            <td>{{fat}}</td>
+            <td>{{fat}}(g)</td>
         </tr>
         <tr>
             <th>cholesterol</th>
-            <td>{{cholesterol}}</td>
+            <td>{{cholesterol}}(mg)</td>
         </tr>
         <tr>
             <th>protein</th>
-            <td>{{protein}}</td>
+            <td>{{protein}}(g)</td>
         </tr>
     </table>
-
-    <a href="{{url_for('app.index')}}">인식페이지</a>
 </body>
 
 </html>

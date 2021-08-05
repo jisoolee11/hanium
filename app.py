@@ -38,41 +38,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
-
-# @app.route('/camera2', methods=['GET'])
-# def camera2():
-#     cap = cv2.VideoCapture(0)
-
-#     width = int(cap.get(3)) # 가로 길이 가져오기 
-#     height = int(cap.get(4)) # 세로 길이 가져오기
-#     fps = 30
-
-#     fcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
-
-#     while (True) :
-#         k = cv2.waitKey(1) & 0xFF
-#         ret, frame = cap.read()
-#         if ret :
-#             # out.write(frame)
-#             cv2.imshow('frame', frame)
-            
-#             if k == ord('s') :
-#                 print("Screenshot saved...")
-#                 cv2.imwrite('static/images/input/{}.jpg'.format(time.time()), frame, params=[cv2.IMWRITE_PNG_COMPRESSION,0])
-#                 cv2.imshow('check_img', cap_file)
-#                 # return render_template('home/img_check.html', cap_file=cap_file)
-#             elif k == ord('q') : break
-#         else :
-#             print("Fail to read frame!")
-#             break
-
-#     return render_template('home/index.html')
-
-#     cap.release()
-#     # out.release()
-#     cv2.destroyAllWindows()
 
 @app.route('/barcode', methods=['GET'])
 def barcode():
@@ -94,15 +62,15 @@ def barcode():
                 used_codes.append(barcode_num)
                 time.sleep(5)
 
-                product = db.barcode.find_one({'barcode': barcode_num})
+                product = db.food.find_one({'barcode': barcode_num})
                 print(product)
                 name = product['name']
-                calories = product['calories(kcal)']
-                sodium = product['sodium(mg)']
-                carbohydrate = product['carbohydrate(g)']
-                fat = product['fat(g)']
-                cholesterol = product['cholesterol(mg)']
-                protein = product['protein(g)']
+                calories = product['calories']
+                sodium = product['sodium']
+                carbohydrate = product['carbohydrate']
+                fat = product['fat']
+                cholesterol = product['cholesterol']
+                protein = product['protein']
                 return render_template('home/barcode.html', name=name, calories=calories, sodium=sodium,
                                         carbohydrate=carbohydrate, fat=fat, cholesterol=cholesterol, protein=protein)
 
@@ -114,6 +82,7 @@ def barcode():
 
         cv2.imshow('Testing-code-scan', frame)
         cv2.waitKey(1)
+        # cv2.destroyAllWindows()
 
 @app.route('/home')
 def index():
@@ -210,7 +179,6 @@ def predict():
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
-
 
 '''
  <form action="http://127.0.0.1:5000/" onLoad="LoadOnce()">
