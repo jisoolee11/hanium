@@ -38,17 +38,17 @@
           let t_calories = 0, t_sodium = 0, t_carbohydrate = 0, t_fat = 0, t_cholesterol = 0, t_protein = 0
           for (let product of products) {
             nutrition.filter(function (obj) {
-            if (obj['name'] === product) {
-              // console.log('있음');
-              let name = nutrition[obj['id']]['name']
-              let calories = nutrition[obj['id']]['calories']
-              let sodium = nutrition[obj['id']]['sodium']
-              let carbohydrate = nutrition[obj['id']]['carbohydrate']
-              let fat = nutrition[obj['id']]['fat']
-              let cholesterol	 = nutrition[obj['id']]['cholesterol']
-              let protein	 = nutrition[obj['id']]['protein']
+              if (obj['name'] === product) {
+                // console.log('있음');
+                let name = nutrition[obj['id']]['name']
+                let calories = nutrition[obj['id']]['calories']
+                let sodium = nutrition[obj['id']]['sodium']
+                let carbohydrate = nutrition[obj['id']]['carbohydrate']
+                let fat = nutrition[obj['id']]['fat']
+                let cholesterol = nutrition[obj['id']]['cholesterol']
+                let protein = nutrition[obj['id']]['protein']
 
-              let nutrition_html = `<tr>
+                let nutrition_html = `<tr>
                                   <td>${name}</td>
                                   <td>${calories}</td>
                                   <td>${sodium}</td>
@@ -57,16 +57,16 @@
                                   <td>${cholesterol}</td>
                                   <td>${protein}</td>                
                               </tr>`
-              $('#info_nutrition').append(nutrition_html)
+                $('#info_nutrition').append(nutrition_html)
 
-              t_calories += calories;
-              t_sodium += sodium;
-              t_carbohydrate += carbohydrate;
-              t_fat += fat;
-              t_cholesterol += cholesterol;
-              t_protein += protein;
-            }
-          });
+                t_calories += calories;
+                t_sodium += sodium;
+                t_carbohydrate += carbohydrate;
+                t_fat += fat;
+                t_cholesterol += cholesterol;
+                t_protein += protein;
+              }
+            });
           }
           let t_nutrition_html = `<tr>
                             <td>${t_calories}</td>
@@ -79,60 +79,62 @@
           $('#t_info_nutrition').append(t_nutrition_html)
         }
       })
-   }
-  </script> 
+    }
+  </script>
 </head>
 
 <body>
   <div class="container">
-    <div class="row">
+    <a href="{{url_for('app.index')}}">메인페이지 바로가기</a> <br>
 
+    <div class="row">
       <div class="col-sm">
         <span class="border border-primary">
-          <img src="{{ url_for('static', filename = user_image)}}" alt="User Image" width="500" height="600" class="img-thumbnail">
+          <img src="{{ url_for('static', filename = user_image)}}" alt="User Image" width="500" height="600"
+            class="img-thumbnail">
         </span>
       </div>
 
       <div class="col-sm">
         <h1 id="labels">Found this</h1>
         {% for product in products %}
-          <h2>{{product}}</h2>
+        <h2>{{product}}</h2>
         {% endfor %}
       </div>
 
       <p>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">식품</th>
-                <th scope="col">열량(kcal)</th>
-                <th scope="col">나트륨(mg)</th>
-                <th scope="col">탄수화물(g)</th>
-                <th scope="col">지방(g)</th>
-                <th scope="col">콜레스테롤(mg)</th>
-                <th scope="col">단백질(g)</th>    
-            </tr>
-            </thead>
-            <tbody id="info_nutrition">
-            </tbody>
-        </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">식품</th>
+            <th scope="col">열량(kcal)</th>
+            <th scope="col">나트륨(mg)</th>
+            <th scope="col">탄수화물(g)</th>
+            <th scope="col">지방(g)</th>
+            <th scope="col">콜레스테롤(mg)</th>
+            <th scope="col">단백질(g)</th>
+          </tr>
+        </thead>
+        <tbody id="info_nutrition">
+        </tbody>
+      </table>
       </p>
       <br>
       <p>
-        <table class="table">
-            <thead>
-            <tr>
-              <th scope="col">총 열량(kcal)</th>
-              <th scope="col">총 나트륨(mg)</th>
-              <th scope="col">총 탄수화물(g)</th>
-              <th scope="col">총 지방(g)</th>
-              <th scope="col">총 콜레스테롤(mg)</th>
-              <th scope="col">총 단백질(g)</th>    
-            </tr>
-            </thead>
-            <tbody id="t_info_nutrition">
-            </tbody>
-        </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">총 열량(kcal)</th>
+            <th scope="col">총 나트륨(mg)</th>
+            <th scope="col">총 탄수화물(g)</th>
+            <th scope="col">총 지방(g)</th>
+            <th scope="col">총 콜레스테롤(mg)</th>
+            <th scope="col">총 단백질(g)</th>
+          </tr>
+        </thead>
+        <tbody id="t_info_nutrition">
+        </tbody>
+      </table>
       </p>
     </div>
   </div>
