@@ -99,6 +99,10 @@
         <h1 id="labels">Found this</h1>
         {% for product in products %}
         <h2>{{product}}</h2>
+        <form>
+          <input type='number' min='0' max='1000' step='10'>
+          <input type='submit'>
+        </form>
         {% endfor %}
       </div>
 

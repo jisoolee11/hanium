@@ -45,13 +45,31 @@ def html(content):
 @app.route('/record')
 def food_record():
     foods = list(db.person.find({},{'_id':False}))
-
+    
+    total_calories = 0
+    total_sodium = 0
+    total_carbohydrate = 0
+    total_fat = 0
+    total_cholesterol = 0
+    total_protein = 0
+    
     food_list = []
     for food in foods:
         food_name = food['name']
         food = db.food.find_one({'name': food_name})
         food_list.append(food)
-    return render_template('home/record.html', food_list=food_list)
+
+        # 전체 계산
+        total_calories += food['calories']
+        total_sodium += food['sodium']
+        total_carbohydrate += food['carbohydrate']
+        total_fat += food['fat']
+        total_cholesterol += food['cholesterol']
+        total_protein += food['protein']
+        total_protein = round(total_protein, 3)
+    return render_template('home/record.html', food_list=food_list, total_calories=total_calories, total_sodium=total_sodium,
+                            total_carbohydrate=total_carbohydrate, total_fat=total_fat, total_cholesterol=total_cholesterol,
+                            total_protein=total_protein)
 
 @app.route('/barcode', methods=['GET'])
 def barcode():
@@ -189,13 +207,13 @@ def predict():
                                     1.5, colour_box_current, 5)   
                 cv2.imwrite('./static/images/output/' + filename , image_input)
 
-                products = list(set(objects))
-                print(products)
-                for product in products:
-                    food = db.food.find_one({'name': product})
-                    db.person.insert_one(food)
+                # products = list(set(objects))
+                # print(products)
+                # for product in products:
+                #     food = db.food.find_one({'name': product})
+                #     db.person.insert_one(food)
                     
-                return render_template('home/predict.html', products = products, user_image = 'images/output/' + filename)
+                return render_template('home/predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
