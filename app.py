@@ -208,11 +208,6 @@ def predict():
                 cv2.imwrite('./static/images/output/' + filename , image_input)
 
                 products = list(set(objects))
-                print(products)
-                for product in products:
-                    food = db.food.find_one({'name': product})
-                    db.person.insert_one(food)
-                    
                 return render_template('home/predict.html', products = products, user_image = 'images/output/' + filename)
                 
         except Exception as e:
