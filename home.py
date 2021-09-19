@@ -218,7 +218,7 @@ def predict():
                 #     food = db.food.find_one({'name': product})
                 #     db.person.insert_one(food)
                     
-                return render_template('home/predict.html', products = products, user_image = 'images/output/' + filename)
+                return render_template('home/predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
