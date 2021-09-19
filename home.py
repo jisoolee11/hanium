@@ -13,7 +13,7 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 db = client.hanium
 
-app = Blueprint('app', __name__)
+home = Blueprint('home', __name__)
 
 configuration_path = "./cfg/yolov3.cfg"
 weights_path = "./yolov3.weights"
@@ -42,36 +42,36 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
-@app.route('/record')
-def food_record():
-    foods = list(db.person.find({},{'_id':False}))
+# @home.route('/record')
+# def food_record():
+#     foods = list(db.person.find({},{'_id':False}))
     
-    total_calories = 0
-    total_sodium = 0
-    total_carbohydrate = 0
-    total_fat = 0
-    total_cholesterol = 0
-    total_protein = 0
+#     total_calories = 0
+#     total_sodium = 0
+#     total_carbohydrate = 0
+#     total_fat = 0
+#     total_cholesterol = 0
+#     total_protein = 0
     
-    food_list = []
-    for food in foods:
-        food_name = food['name']
-        food = db.food.find_one({'name': food_name})
-        food_list.append(food)
+#     food_list = []
+#     for food in foods:
+#         food_name = food['name']
+#         # food = db.food.find_one({'name': food_name})
+#         food_list.append(food)
 
-        # 전체 계산
-        total_calories += food['calories']
-        total_sodium += food['sodium']
-        total_carbohydrate += food['carbohydrate']
-        total_fat += food['fat']
-        total_cholesterol += food['cholesterol']
-        total_protein += food['protein']
-        total_protein = round(total_protein, 3)
-    return render_template('home/record.html', food_list=food_list, total_calories=total_calories, total_sodium=total_sodium,
-                            total_carbohydrate=total_carbohydrate, total_fat=total_fat, total_cholesterol=total_cholesterol,
-                            total_protein=total_protein)
+#         # 전체 계산
+#         total_calories += food['calories']
+#         total_sodium += food['sodium']
+#         total_carbohydrate += food['carbohydrate']
+#         total_fat += food['fat']
+#         total_cholesterol += food['cholesterol']
+#         total_protein += food['protein']
+#         total_protein = round(total_protein, 3)
+#     return render_template('home/record.html', food_list=food_list, total_calories=total_calories, total_sodium=total_sodium,
+#                             total_carbohydrate=total_carbohydrate, total_fat=total_fat, total_cholesterol=total_cholesterol,
+#                             total_protein=total_protein)
 
-@app.route('/barcode', methods=['GET'])
+@home.route('/barcode', methods=['GET'])
 def barcode():
     cap = cv2.VideoCapture(0)
     cap.set(3, 640)
@@ -116,19 +116,23 @@ def barcode():
         cv2.waitKey(1)
         # cv2.destroyAllWindows()
 
-@app.route('/home')
-def index():
-    return render_template('home/index.html')
+@home.route('/')
+def intro():
+    return render_template('home/intro.html')
 
-@app.route('/camera')
+@home.route('/main')
+def main():
+    return render_template('home/main.html')
+
+@home.route('/camera')
 def camera():
-    return render_template('home/cam.html')
+    return render_template('home/camera.html')
 
-@app.route("/upload", methods=['GET', 'POST'])
+@home.route("/upload", methods=['GET', 'POST'])
 def upload():
     return render_template('home/upload.html')
 
-@app.route("/predict", methods = ['GET','POST'])
+@home.route("/predict", methods = ['GET','POST'])
 def predict():
     if request.method == 'POST':
         file = request.files['file']
@@ -210,9 +214,9 @@ def predict():
 
                 products = list(set(objects))
                 print(products)
-                for product in products:
-                    food = db.food.find_one({'name': product})
-                    db.person.insert_one(food)
+                # for product in products:
+                #     food = db.food.find_one({'name': product})
+                #     db.person.insert_one(food)
                     
                 return render_template('home/predict.html', products = products, user_image = 'images/output/' + filename)
                 

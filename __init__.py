@@ -11,6 +11,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
@@ -30,11 +31,10 @@ def create_app():
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
 
-    from .app import app as app_blueprint
-    app.register_blueprint(app_blueprint)
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint)
 
     return app

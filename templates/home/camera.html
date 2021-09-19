@@ -35,32 +35,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <div class="container-fluid">
-            <div class="title">
-                <img src="../static/images/logo2.png" alt="logo_example" width="100" height="100">
-                카메라로 인식하기</div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/signin">Signin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <a href="{{url_for('app.index')}}">메인페이지 바로가기</a> <br>
+    {% include 'home/side.html' %}
 
     <video id="video" width="640" height="480" autoplay></video>
     <button id="snap">Snap Photo</button>
@@ -104,7 +79,7 @@
         $("#button").click(function(){
             domtoimage.toBlob(document.getElementById('canvas')).then(function(blob){
                 window.saveAs(blob, "camera.jpg")
-                window.location.href = "{{url_for('app.upload')}}"
+                window.location.href = "{{url_for('home.upload')}}"
             })
         })
     })
