@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 user = Blueprint('user', __name__)
 
 @user.route('/profile')
-# @login_required
+@login_required
 def profile():
     return render_template('user/profile.html')
 
