@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from numpy import rec
 from pyzbar.pyzbar import decode
 import json
 import time
@@ -60,7 +61,7 @@ def food_record():
     for food in products:
         for i in nutrition_data['nutrition']:
             if i['name'] == food:
-                new_food = Food(record_id=new_record.id, 
+                new_food = Food(record_id=new_record.id,
                                 calories=i['calories'], 
                                 sodium=i['sodium'], 
                                 carbohydrate=i['carbohydrate'], 
@@ -69,7 +70,27 @@ def food_record():
                                 protein=i['protein'])
                 db.session.add(new_food)
                 db.session.commit()
-    return render_template('user/record.html')
+
+    food_list = Food.query.filter_by(record_id = new_record.id).all()
+    print(food_list) # <Food 29>, <Food 30>
+
+    food_total = {}
+    food_total['calories'] = food_total['sodium'] = food_total['carbohydrate'] \
+    = food_total['fat'] = food_total['cholesterol'] = food_total['protein'] = 0
+    for food in food_list:
+        print("\n", food.calories)
+        food_total['calories'] += food.calories
+        food_total['sodium'] += food.sodium
+        food_total['carbohydrate'] += food.carbohydrate
+        food_total['fat'] += food.fat
+        food_total['cholesterol'] += food.cholesterol
+        food_total['protein'] += food.protein
+
+    # print(food_total)
+    # {'calories': 74.0, 'sodium': 102.0, 'carbohydrate': 17.0, 'fat': 0.4, 'cholesterol': 0.0, 'protein': 3.6999999999999997}
+
+    return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
+
 #     foods = list(db.person.find({},{'_id':False}))
     
 #     total_calories = 0
