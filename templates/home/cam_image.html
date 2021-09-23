@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <form action="/predict_cam" method="post" enctype="multipart/form-data">
+        <input type="image" src="{{url_for('static', filename=image_path)}}" id="image_cam" name="image_cam" />
+        <input type="submit" value="Upload">
+    </form> -->
+    <img src="{{url_for('static', filename=image_path)}}"/>
+    <a href="{{ url_for('home.upload')}}">업로드</a>
+    <a href="{{ url_for('cam.retry') }}">다시찍기</a>
+</body>
+</html>

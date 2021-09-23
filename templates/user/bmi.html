@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     {% include 'home/side.html' %}
     <h1>BMI측정</h1>
-    
+
+    <div class="main">
+        <form class="pure-form" method="POST" action="/bmi/result">
+            Weight in kgs:<br>
+            <input type="text" name="weight"><br>
+            Height in cms:<br>
+            <input type="text" name="height"><br>
+            <button type="submit" class="pure-button pure-button-primary" value="Submit">Submit</button>
+        </form>
+    </div>
+
+
 </body>
+
 </html>

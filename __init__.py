@@ -9,6 +9,9 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
+    global capture
+    capture = 0
+
     migrate = Migrate(app, db)
 
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
@@ -39,5 +42,8 @@ def create_app():
 
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint)
+
+    from .cam import cam as cam_blueprint
+    app.register_blueprint(cam_blueprint)
 
     return app

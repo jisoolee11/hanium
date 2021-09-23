@@ -40,8 +40,8 @@
     {% include 'home/side.html' %}
 
     <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" id="file" name="file" />
-        <button type=button onclick='test()'>Display</button>
+        <input type="file" id="file" name="file" onchange="test()"/>
+        <!-- <button type=button onclick='test()'>Display</button> -->
         <input type="submit" value="Upload">
     </form>
 </div>

@@ -7,11 +7,16 @@ import time
 from pyzbar.pyzbar import decode
 import json
 import time
+from datetime import datetime
+from flask_login import current_user
 
-from pymongo import MongoClient
+from .models import *
+from . import db
 
-client = MongoClient('localhost', 27017)
-db = client.hanium
+# from pymongo import MongoClient
+
+# client = MongoClient('localhost', 27017)
+# db = client.hanium
 
 home = Blueprint('home', __name__)
 
@@ -42,8 +47,28 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
-# @home.route('/record')
-# def food_record():
+@home.route('/food_record')
+def food_record():
+    with open('./static/nutrition.json') as f:
+        nutrition_data = json.load(f)
+        print(json.dumps(nutrition_data))
+
+    new_record = Record(user_id=current_user.id, date=datetime.now())
+    db.session.add(new_record)
+    db.session.commit()
+    for food in products:
+        for i in nutrition_data['nutrition']:
+            if i['name'] == food:
+                new_food = Food(record_id=new_record.id, 
+                                calories=i['calories'], 
+                                sodium=i['sodium'], 
+                                carbohydrate=i['carbohydrate'], 
+                                fat=i['fat'], 
+                                cholesterol=i['cholesterol'],
+                                protein=i['protein'])
+                db.session.add(new_food)
+                db.session.commit()
+    return render_template('home/main.html')
 #     foods = list(db.person.find({},{'_id':False}))
     
 #     total_calories = 0
@@ -124,9 +149,9 @@ def intro():
 def main():
     return render_template('home/main.html')
 
-@home.route('/camera')
-def camera():
-    return render_template('home/camera.html')
+# @home.route('/camera')
+# def camera():
+#     return render_template('home/camera.html')
 
 @home.route("/upload", methods=['GET', 'POST'])
 def upload():
@@ -134,6 +159,7 @@ def upload():
 
 @home.route("/predict", methods = ['GET','POST'])
 def predict():
+    global products
     if request.method == 'POST':
         file = request.files['file']
         try:
@@ -222,9 +248,3 @@ def predict():
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
-
-'''
- <form action="http://127.0.0.1:5000/" onLoad="LoadOnce()">
-      <input type="submit" value="wanna find other things ? ?" />
-  </form>
-'''
