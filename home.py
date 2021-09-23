@@ -47,6 +47,7 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
+# 상세 기록 정보
 @home.route('/food_record')
 def food_record():
     with open('./static/nutrition.json') as f:
@@ -68,7 +69,7 @@ def food_record():
                                 protein=i['protein'])
                 db.session.add(new_food)
                 db.session.commit()
-    return render_template('home/main.html')
+    return render_template('user/record.html')
 #     foods = list(db.person.find({},{'_id':False}))
     
 #     total_calories = 0
@@ -157,6 +158,7 @@ def main():
 def upload():
     return render_template('home/upload.html')
 
+
 @home.route("/predict", methods = ['GET','POST'])
 def predict():
     global products
@@ -240,9 +242,6 @@ def predict():
 
                 products = list(set(objects))
                 print(products)
-                # for product in products:
-                #     food = db.food.find_one({'name': product})
-                #     db.person.insert_one(food)
                     
                 return render_template('home/predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
                 
