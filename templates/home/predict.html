@@ -49,13 +49,32 @@
                 let protein = nutrition[obj['id']]['protein']
 
                 let nutrition_html = `<tr>
-                                  <td>${name}</td>
-                                  <td>${calories}</td>
-                                  <td>${sodium}</td>
-                                  <td>${carbohydrate}</td>
-                                  <td>${fat}</td>
-                                  <td>${cholesterol}</td>
-                                  <td>${protein}</td>                
+                                    <td style="font-size: 32px; font-weight:bold;">식품명</td>
+                                    <td style="font-size: 32px; font-weight:bold;">${name}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>열량(kcal)</td>
+                                    <td>${calories}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>나트륨(mg)</td>
+                                    <td>${sodium}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>탄수화물(mg)</td>
+                                    <td>${carbohydrate}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>지방(g)</td>
+                                    <td>${fat}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>콜레스테롤(mg)</td>  
+                                    <td>${cholesterol}</td>
+                                  </tr>
+                                  <tr>  
+                                    <td>단백질(g)</td>
+                                    <td>${protein}</td>                
                               </tr>`
                 $('#info_nutrition').append(nutrition_html)
 
@@ -68,24 +87,69 @@
               }
             });
           }
+          
           let t_nutrition_html = `<tr>
-                            <td>${t_calories}</td>
-                            <td>${t_sodium}</td>
-                            <td>${t_carbohydrate}</td>
-                            <td>${t_fat}</td>
-                            <td>${t_cholesterol}</td>
-                            <td>${parseFloat(t_protein.toFixed(2))}</td>                
-                          </tr>`
+                                    <td>총 열량(kcal)</td>
+                                    <td>${t_calories}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>총 나트륨(mg)</td>
+                                    <td>${t_sodium}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>총 탄수화물(g)</td>
+                                    <td>${t_carbohydrate}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>총 지방(g)</td>
+                                    <td>${t_fat}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>총 콜레스테롤(mg)</td>
+                                    <td>${t_cholesterol}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>총 단백질(g)</td>  
+                                    <td>${parseFloat(t_protein.toFixed(2))}</td>
+                              </tr>`
           $('#t_info_nutrition').append(t_nutrition_html)
         }
       })
     }
   </script>
+  <style>
+    .background {
+      background-image: url('../../static/wave2.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .title {
+          margin-left: 10px;
+          margin-top: 10px;
+          margin-bottom: 50px;
+          height: 50px;
+        }
+
+    .name {
+      font-weight: 1000;
+      font-size: 50px;
+    }
+
+    tbody {
+      margin-bottom: 30px;
+    }
+  </style>
 </head>
 
-<body>
+<body class="background">
   <div class="container">
     {% include 'home/side.html' %}
+
+    <div class="title">
+      <h1 class="name">인식 결과</h1>
+
+    </div>
 
     <div class="row">
       <div class="col-sm">
@@ -95,47 +159,26 @@
         </span>
       </div>
 
-      <div class="col-sm">
+      <!-- <div class="col-sm">
         <h1 id="labels">Found this</h1>
         {% for product in products %}
         <h2>{{product}}</h2>
-        <form>
-          <input type='number' min='0' max='1000' step='10'>
-          <input type='submit'>
-        </form>
+        
         {% endfor %}
-      </div>
+      </div> -->
+
+      
 
       <p>
       <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">식품</th>
-            <th scope="col">열량(kcal)</th>
-            <th scope="col">나트륨(mg)</th>
-            <th scope="col">탄수화물(g)</th>
-            <th scope="col">지방(g)</th>
-            <th scope="col">콜레스테롤(mg)</th>
-            <th scope="col">단백질(g)</th>
-          </tr>
-        </thead>
         <tbody id="info_nutrition">
         </tbody>
       </table>
       </p>
       <br>
       <p>
+      <p style="font-size: 32px; font-weight: bold;">&nbsp;총 영양정보</p>
       <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">총 열량(kcal)</th>
-            <th scope="col">총 나트륨(mg)</th>
-            <th scope="col">총 탄수화물(g)</th>
-            <th scope="col">총 지방(g)</th>
-            <th scope="col">총 콜레스테롤(mg)</th>
-            <th scope="col">총 단백질(g)</th>
-          </tr>
-        </thead>
         <tbody id="t_info_nutrition">
         </tbody>
       </table>
