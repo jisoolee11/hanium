@@ -9,11 +9,12 @@ from pyzbar.pyzbar import decode
 import pyzbar.pyzbar as pyzbar
 import json
 import time
-from datetime import datetime
+from datetime import datetime, date
 from flask_login import current_user
 
 from .models import *
 from . import db
+from sqlalchemy import cast, DATE
 
 # from pymongo import MongoClient
 
@@ -49,6 +50,28 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
+# 날짜별 기록
+@home.route('/record')
+def record():
+    # user = User.query.get(current_user.id)
+    # print(user)
+
+    # today = datetime.today()
+    # print(today)
+
+    record_list = Record.query.filter_by(user_id=current_user.id) # 동일한 유저
+    record_list.filter(cast(Record.date, DATE)==date.today()).all() # 같은 날짜
+    print(record_list)
+
+    food_list = []
+    for record in record_list:
+        # print(record.id, '\n\n')
+        food = Food.query.filter_by(record_id=record.id)
+        food_list += food
+
+    print("\n\nfood_list:", food_list)
+    return render_template('user/record.html', food_list=food_list)
+
 # 상세 기록 정보
 @home.route('/food_record')
 def food_record():
@@ -63,6 +86,7 @@ def food_record():
         for i in nutrition_data['nutrition']:
             if i['name'] == food:
                 new_food = Food(record_id=new_record.id,
+                                name=i['name'],
                                 calories=i['calories'], 
                                 sodium=i['sodium'], 
                                 carbohydrate=i['carbohydrate'], 
