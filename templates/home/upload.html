@@ -113,22 +113,22 @@
 </head>
 
 <body class="background">
-    <div class="title">
-      <h1 class="name">음식 인식</h1>
-    </div>
+  <div class="title">
+    <h1 class="name">음식 인식</h1>
+  </div>
 
-    <div class="image_select">
-      <form action="/predict" method="post" enctype="multipart/form-data">
-        <label for="file" class="font">이미지 선택</label>
-        <input type="file" id="file" name="file" onchange="test()" />
-      </form>
-    </div>
+  <div class="image_select">
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <label for="file" class="font">이미지 선택</label>
+      <input type="file" id="file" name="file" onchange="test()" />
 
-    <div class="result">
-      <button type="submit" class="btn btn-light font">결과보기</button>
-    </div>
+  </div>
 
-    <!-- {% include 'home/side.html' %} -->
+  <div class="result">
+    <button type="submit" class="btn btn-light font">결과보기</button>
+  </div>
+  </form>
+  <!-- {% include 'home/side.html' %} -->
 
   <script>
     function test() {
