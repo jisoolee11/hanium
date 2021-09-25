@@ -11,6 +11,7 @@
 <body>
   {% include 'home/side.html' %}
   <h1>메인페이지</h1>
+  {{current_user.name}}
   <!-- <a href="{{ url_for('user.record') }}">식단기록</a>
   <a href="{{ url_for('user.bmi') }}">BMI</a>
   <a href="{{ url_for('auth.logout') }}">로그아웃</a> -->
