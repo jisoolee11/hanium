@@ -5,42 +5,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <title>Document</title>
+
+    <script>
+        $(document).ready(function(){
+            showFood();
+        });
+
+        function showFood() {
+            $.ajax({
+                type: "GET",
+                url: "./static/food.json",
+                data: {},
+                success: function (response) {
+                    let food = response['food']
+                    let my_code = "{{my_code}}"
+                    console.log(my_code)
+                    food.filter(function (obj) {
+                        if (obj['barcode'] === my_code) {
+                            console.log('있음');
+                            let name = food[obj['id']]['name']
+                            let calories = food[obj['id']]['calories']
+                            let sodium = food[obj['id']]['sodium']
+                            let carbohydrate = food[obj['id']]['carbohydrate']
+                            let fat = food[obj['id']]['fat']
+                            let sugars = food[obj['id']]['sugars']
+                            let protein = food[obj['id']]['protein']
+
+                            let food_html = `<tr>
+                                <td>${name}</td>
+                                <td>${calories}</td>
+                                <td>${sodium}</td>
+                                <td>${carbohydrate}</td>
+                                <td>${fat}</td>
+                                <td>${sugars}</td>
+                                <td>${protein}</td>                
+                            </tr>`
+                            $('#info_food').append(food_html)
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
-    <a href="{{url_for('app.index')}}">메인페이지 바로가기</a> <br>
-
-    <table>
-        <tr>
-            <th>name</th>
-            <td>{{name}}</td>
-        </tr>
-        <tr>
-            <th>calories</th>
-            <td>{{calories}}(kcal)</td>
-        </tr>
-        <tr>
-            <th>sodium</th>
-            <td>{{sodium}}(mg)</td>
-        </tr>
-        <tr>
-            <th>carbohydrate</th>
-            <td>{{carbohydrate}}(g)</td>
-        </tr>
-        <tr>
-            <th>fat</th>
-            <td>{{fat}}(g)</td>
-        </tr>
-        <tr>
-            <th>cholesterol</th>
-            <td>{{cholesterol}}(mg)</td>
-        </tr>
-        <tr>
-            <th>protein</th>
-            <td>{{protein}}(g)</td>
-        </tr>
+    {% include 'home/side.html' %}
+    <p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">식품</th>
+                <th scope="col">열량(kcal)</th>
+                <th scope="col">나트륨(mg)</th>
+                <th scope="col">탄수화물(g)</th>
+                <th scope="col">지방(g)</th>
+                <th scope="col">당류(g)</th>
+                <th scope="col">단백질(g)</th>
+            </tr>
+        </thead>
+        <tbody id="info_food">
+        </tbody>
     </table>
+    </p>
+
+    <a href="{{url_for('home.barcode_record')}}">저장하기</a>
+
 </body>
 
 </html>

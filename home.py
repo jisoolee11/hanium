@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 from pyzbar.pyzbar import decode
+import pyzbar.pyzbar as pyzbar
 import json
 import time
 from datetime import datetime
@@ -68,7 +69,7 @@ def food_record():
                                 protein=i['protein'])
                 db.session.add(new_food)
                 db.session.commit()
-    return render_template('home/main.html')
+    return render_template('user/record.html', food_list = Food.query.all())
 #     foods = list(db.person.find({},{'_id':False}))
     
 #     total_calories = 0
@@ -101,44 +102,63 @@ def barcode():
     cap = cv2.VideoCapture(0)
     cap.set(3, 640)
     cap.set(4, 480)
-    used_codes = []
 
-    camera = True
-    while camera == True:
+    while True:
         success, frame = cap.read()
 
-        for code in decode(frame):
-
-            if code.data.decode('utf-8') not in used_codes:
-                print('Approved')
-                barcode_num = code.data.decode('utf-8')
-                print(barcode_num)
-                used_codes.append(barcode_num)
-                time.sleep(5)
-
-                product = db.food.find_one({'barcode': barcode_num})
-                print(product, '!!!!!!!!!!')
-                db.person.insert_one(product)
-
-                name = product['name']
-                calories = product['calories']
-                sodium = product['sodium']
-                carbohydrate = product['carbohydrate']
-                fat = product['fat']
-                cholesterol = product['cholesterol']
-                protein = product['protein']
-
-                return render_template('home/barcode.html', name=name, calories=calories, sodium=sodium,
-                                        carbohydrate=carbohydrate, fat=fat, cholesterol=cholesterol, protein=protein)
-
-            elif code.data.decode('utf-8') in used_codes:
-                print('Sorry, this code has been already used')
-                time.sleep(5)
+        for code in pyzbar.decode(frame):
+            my_code = code.data.decode('utf-8')
+            if my_code:
+                print("인식 성공 : ", my_code)
+                cv2.destroyAllWindows()
+                return render_template('home/barcode.html', my_code=my_code)
             else:
-                return html('일치하는 바코드 번호가 없습니다. <a href="/home">메인페이지로 돌아가기</a>')
-
+                pass
         cv2.imshow('Testing-code-scan', frame)
         cv2.waitKey(1)
+
+@home.route('/barcode_record')
+def barcode_record(my_code):
+    pass
+
+    # used_codes = []
+
+    # camera = True
+    # while camera == True:
+        # success, frame = cap.read()
+
+        # for code in decode(frame):
+
+        #     if code.data.decode('utf-8') not in used_codes:
+        #         print('Approved')
+        #         barcode_num = code.data.decode('utf-8')
+        #         print(barcode_num)
+        #         used_codes.append(barcode_num)
+        #         time.sleep(5)
+
+        #         product = db.food.find_one({'barcode': barcode_num})
+        #         print(product, '!!!!!!!!!!')
+        #         db.person.insert_one(product)
+
+        #         name = product['name']
+        #         calories = product['calories']
+        #         sodium = product['sodium']
+        #         carbohydrate = product['carbohydrate']
+        #         fat = product['fat']
+        #         cholesterol = product['cholesterol']
+        #         protein = product['protein']
+
+        #         return render_template('home/barcode.html', name=name, calories=calories, sodium=sodium,
+        #                                 carbohydrate=carbohydrate, fat=fat, cholesterol=cholesterol, protein=protein)
+
+        #     elif code.data.decode('utf-8') in used_codes:
+        #         print('Sorry, this code has been already used')
+        #         time.sleep(5)
+        #     else:
+        #         return html('일치하는 바코드 번호가 없습니다. <a href="/home">메인페이지로 돌아가기</a>')
+
+        # cv2.imshow('Testing-code-scan', frame)
+        # cv2.waitKey(1)
         # cv2.destroyAllWindows()
 
 @home.route('/')
