@@ -72,7 +72,9 @@ def food_record():
                 db.session.add(new_food)
                 db.session.commit()
 
-    food_list = Food.query.filter_by(record_id = new_record.id).all()
+    food_list = Food.query.filter_by(record_id=new_record.id).all()
+    # food_list = Food.query.filter_by(record_id = )
+    # food_list = Food.query.filter_by
     print(food_list) # <Food 29>, <Food 30>
 
     food_total = {}
@@ -90,7 +92,8 @@ def food_record():
     # print(food_total)
     # {'calories': 74.0, 'sodium': 102.0, 'carbohydrate': 17.0, 'fat': 0.4, 'cholesterol': 0.0, 'protein': 3.6999999999999997}
 
-    return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
+    return render_template('user/record.html', food_list=food_list, food_total=food_total)
+
 
 #     foods = list(db.person.find({},{'_id':False}))
     

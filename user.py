@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 from . import db
 from flask_login import login_required, current_user
-from .models import User
+from .models import *
 
 user = Blueprint('user', __name__)
 
@@ -12,7 +12,9 @@ def profile():
 
 @user.route('/record')
 def record():
-    return render_template('user/record.html')
+    user_record = Record.query.filter_by(user_id=current_user.id).all()
+    food_record = Food.query.filter_by(record_id=14).all()
+    return render_template('user/record.html', user_record=user_record, food_record=food_record)
 
 @user.route('/bmi')
 def bmi():
