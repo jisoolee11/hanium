@@ -83,6 +83,12 @@
             font-size: large;
             font-weight: bold;
         }
+
+        .mainpage {
+            margin-left: 26%;
+            font-size: small;
+            text-decoration: none;
+        }
     </style>
 
 <body>
@@ -115,7 +121,7 @@
             </div>
 
             <input class="button" type="submit" value="로그인">
-            <a href="{{ url_for('home.main') }}">메인 페이지</a>
+            <a href="{{ url_for('home.main') }}" class="mainpage">메인 페이지 바로가기</a>
         </div>
     </form>
     </div>
