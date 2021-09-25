@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>signup</title>
+    <title>회원가입페이지</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -34,7 +34,7 @@
         }
 
         .loginform {
-            margin-top: 30%;
+            margin-top: 15%;
         }
 
         .box {
@@ -43,7 +43,7 @@
             width: 80%;
             height: 70%;
             border-radius: 10px;
-            padding: 25px;
+            padding: 20px;
         }
 
         .inputfield {
@@ -83,13 +83,13 @@
 <body>
     <p class="title">calorie for diet</p>
 
-    <!-- {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages() %}
     {% if messages %}
     <div class="notification is-danger">
         {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
     </div>
     {% endif %}
-    {% endwith %} -->
+    {% endwith %}
 
     <form method="POST" action="/signup">
         <div class="loginform">
@@ -114,7 +114,25 @@
 
                 <div class="inputfield">
                     <div class="input">
+                        <input type="text" name="height" placeholder="키"><br>
+                    </div>
+                </div>
+
+                <div class="inputfield">
+                    <div class="input">
+                        <input type="text" name="weight" placeholder="몸무게"><br>
+                    </div>
+                </div>
+
+                <div class="inputfield">
+                    <div class="input">
                         <input type="text" name="gender" placeholder="성별"><br>
+                    </div>
+                </div>
+
+                <div class="inputfield">
+                    <div class="input">
+                        <input type="text" name="age" placeholder="나이"><br>
                     </div>
                 </div>
             </div>

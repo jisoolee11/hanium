@@ -8,22 +8,39 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    
     <title>Live Streaming Demonstration</title>
     <!-- opencv camera -->
+
+    <style>
+        .title {
+            text-align: center;
+            font-size: 50px;
+        }
+        .video{
+            margin-top: 5%;
+        }
+    </style>
 </head>
+
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-lg-8  offset-lg-2">
-            <h3 class="mt-5">camera</h3>
+        <div class="col-lg-8  offset-lg-2" style="background-image: url(../static/images/backgroundimage.jpg)">
+            <h3 class="mt-5, title">사진촬영</h3>
             <form method="post" action="{{ url_for('cam.tasks') }}">
-                <input type="submit" value="Capture" name="capture"/>
+                <!-- <label for="capture" class="font">사진찍기</label> -->
+                <input type="submit" name="capture" id="capture" value="사진찍기"/>
             </form>
 
-            <img src="{{ url_for('cam.video_feed') }}" width="100%">
+            <img class="video" src="{{ url_for('cam.video_feed') }}" width="100%">
         </div>
     </div>
 </div>
+
 </body>
+
+
+
 </html>

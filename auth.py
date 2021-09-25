@@ -39,6 +39,7 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
+    gender = request.form.get('gender')
     
     user = User.query.filter_by(email=email).first()
 
@@ -46,7 +47,12 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
 
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    if gender == "남자":
+        gender = 0
+    else:
+        gender = 1
+
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), gender=gender)
 
     db.session.add(new_user)
     db.session.commit()
