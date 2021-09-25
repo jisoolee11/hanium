@@ -5,19 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>record</title>
 </head>
 
 <body>
     {% include 'home/side.html' %}
 
-    <h1>식단 기록</h1>
-<!-- 
+    <h1>식단 기록 상세</h1>
+
     {% for food in food_list %}
     <table>
         <thead>
             <tr>
-                <th>name</th>
                 <th>calories</th>
                 <th>sodium</th>
                 <th>carbohydrate</th>
@@ -26,7 +25,6 @@
                 <th>protein</th>
             </tr>
             <tr>
-                <td>{{food.name}}</td>
                 <td>{{food.calories}}(kcal)</td>
                 <td>{{food.sodium}}(mg)</td>
                 <td>{{food.carbohydrate}}(g)</td>
@@ -50,14 +48,14 @@
             <th>전체 단백질</th>
         </tr>
         <tr>
-            <td>{{total_calories}}(kcal)</td>
-            <td>{{total_sodium}}(mg)</td>
-            <td>{{total_carbohydrate}}(g)</td>
-            <td>{{total_fat}}(g)</td>
-            <td>{{total_cholesterol}}(mg)</td>
-            <td>{{total_protein}}(g)</td>
+            <td>{{food_total.calories}}(kcal)</td>
+            <td>{{food_total.sodium}}(mg)</td>
+            <td>{{food_total.carbohydrate}}(g)</td>
+            <td>{{food_total.fat}}(g)</td>
+            <td>{{food_total.cholesterol}}(mg)</td>
+            <td>{{food_total.protein}}(g)</td>
         </tr>
-    </table> -->
+    </table>
 </body>
 
 </html>

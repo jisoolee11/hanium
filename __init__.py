@@ -9,9 +9,6 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    global capture
-    capture = 0
-
     migrate = Migrate(app, db)
 
     app.config['SECRET_KEY'] = 'secret-key-goes-here'

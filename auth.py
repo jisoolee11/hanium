@@ -14,7 +14,7 @@ def login():
 def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+    # remember = True if request.form.get('remember') else False
 
     user = User.query.filter_by(email=email).first()
 
@@ -22,7 +22,7 @@ def login_post():
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login'))
 
-    login_user(user, remember=remember)
+    login_user(user)
     return redirect(url_for('home.main'))
 
 @auth.route('/signup')
@@ -39,7 +39,7 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-
+    
     user = User.query.filter_by(email=email).first()
 
     if user:

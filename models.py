@@ -11,6 +11,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
     weight = db.Column(db.Integer, nullable=True)
     height = db.Column(db.Integer, nullable=True)
+    gender = db.Column(db.Boolean, nullable=True)
+    age = db.Column(db.Integer, nullable=True)
 
     record = relationship("Record", cascade="all, delete", backref="user")
 
@@ -31,6 +33,5 @@ class Food(db.Model):
     carbohydrate = db.Column(db.Float)
     fat = db.Column(db.Float)
     cholesterol = db.Column(db.Float)
-    protein = db.Column(db.Float)
-    
+    protein = db.Column(db.Float) 
     
