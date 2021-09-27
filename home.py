@@ -13,7 +13,7 @@ from datetime import datetime, date
 from flask_login import current_user
 
 from .models import *
-from . import db
+# from . import db
 from sqlalchemy import cast, DATE
 
 # from pymongo import MongoClient
@@ -116,7 +116,7 @@ def food_record():
     # print(food_total)
     # {'calories': 74.0, 'sodium': 102.0, 'carbohydrate': 17.0, 'fat': 0.4, 'cholesterol': 0.0, 'protein': 3.6999999999999997}
 
-    return render_template('user/record.html', food_list=food_list, food_total=food_total)
+    return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
 
 
 #     foods = list(db.person.find({},{'_id':False}))

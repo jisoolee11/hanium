@@ -15,13 +15,14 @@ def gen_frames():  # generate frame by frame from camera
     while True:
         # Capture frame-by-frame
         success, frame = camera.read()  # read the camera frame
+        # print(type(frame))
         if not success:
             break
         else:
             ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
+            frame1 = buffer.tobytes()
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame1 + b'\r\n')  # concat frame one by one and show result
 
             
 

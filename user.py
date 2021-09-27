@@ -12,9 +12,7 @@ def profile():
 
 @user.route('/record')
 def record():
-    user_record = Record.query.filter_by(user_id=current_user.id).all()
-    food_record = Food.query.filter_by(record_id=14).all()
-    return render_template('user/record.html', user_record=user_record, food_record=food_record)
+    return render_template('user/record.html')
 
 @user.route('/bmi')
 def bmi():
