@@ -126,9 +126,52 @@ def barcode():
     return render_template('home/main.html')
         
 
-@home.route('/barcode_record')
+@home.route('/barcode_record/<my_code>')
 def barcode_record(my_code):
-    pass
+    with open('./static/food.json') as f:
+        food_data = json.load(f)
+        # print(json.dumps(nutrition_data))
+
+    new_record = Record(user_id=current_user.id, date=datetime.now())
+    db.session.add(new_record)
+    db.session.commit()
+    for i in food_data['food']:
+        if i['barcode'] == my_code:
+            new_food = Food(record_id=new_record.id,
+                            name=i['name'],
+                            calories=i['calories'], 
+                            sodium=i['sodium'], 
+                            carbohydrate=i['carbohydrate'], 
+                            fat=i['fat'], 
+                            cholesterol=i['cholesterol'],
+                            protein=i['protein'])
+
+            db.session.add(new_food)
+            db.session.commit()
+            
+            t_record = Record.query.order_by(Record.id.desc()).first()
+            print(t_record.t_calories)
+            t_record.t_calories += i['calories']
+            t_record.t_sodium += i['sodium']
+            t_record.t_carbohydrate += i['carbohydrate']
+            t_record.t_fat += i['fat']
+            t_record.t_cholesterol += i['cholesterol']
+            t_record.t_protein += i['protein']
+            db.session.commit()
+
+                # t_date = datetime.today().date()
+                # food = Record.query.get(Record.user_id==current_user.id, Record.date>=t_date)
+                # food.t_calories += i['calories']
+                # db.session.commit()
+
+
+
+    # food_list = Food.query.filter_by(record_id=new_record.id).all()
+    
+    # {'calories': 74.0, 'sodium': 102.0, 'carbohydrate': 17.0, 'fat': 0.4, 'cholesterol': 0.0, 'protein': 3.6999999999999997}
+
+    # return render_template('user/record.html', date = date)
+    return Response(record())
 
     # used_codes = []
 

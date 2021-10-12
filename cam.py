@@ -14,8 +14,8 @@ cam = Blueprint('cam', __name__)
 def gen_frames():  # generate frame by frame from camera
     camera = cv2.VideoCapture(0) 
     global frame
-    my_code = 0
-    while my_code == 0:
+    # my_code = 0
+    while True:
         # Capture frame-by-frame
         success, frame = camera.read()  # read the camera frame
         # print(type(frame))
@@ -24,16 +24,19 @@ def gen_frames():  # generate frame by frame from camera
         else:
             ret, buffer = cv2.imencode('.jpg', frame)
             frame1 = buffer.tobytes()
-            frame1_return = (b'--frame\r\n'
+
+            yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame1 + b'\r\n')
 
             for code in pyzbar.decode(frame):
                 my_code = code.data.decode('utf-8')
                 if my_code:
                     print(my_code)
-                    # return jsonify('is')
+                    camera.release()
+                    return
+                    # yield None
+                    # return render_template('home/main.html')
                 
-            yield frame1_return
     # yield Response(result_code(my_code))
                     # frame1_return = 0 
   # concat frame one by one and show result
@@ -51,11 +54,13 @@ def gen_frames():  # generate frame by frame from camera
 
 def result_code(my_code):
     print(my_code)
+    return render_template('home/main.html')
     # yield render_template('home/cam.html', my_code=my_code)
     # return render_template('home/main.html')
 #     with app.app_context():
 #         template = render_template('home/barcode.html')
 #         return template
+
     
 
 @cam.route('/barcode1')

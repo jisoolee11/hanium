@@ -38,19 +38,19 @@
                             let sodium = food[obj['id']]['sodium']
                             let carbohydrate = food[obj['id']]['carbohydrate']
                             let fat = food[obj['id']]['fat']
-                            let sugars = food[obj['id']]['sugars']
+                            let cholesterol= food[obj['id']]['cholesterol']
                             let protein = food[obj['id']]['protein']
 
-                            let food_html = `<tr>
+                            let record_html = `<tr>
                                 <td>${name}</td>
                                 <td>${calories}</td>
                                 <td>${sodium}</td>
                                 <td>${carbohydrate}</td>
                                 <td>${fat}</td>
-                                <td>${sugars}</td>
+                                <td>${cholesterol}</td>
                                 <td>${protein}</td>                
                             </tr>`
-                            $('#info_food').append(food_html)
+                            $('#info_record').append(record_html)
                         }
                     })
                 }
@@ -70,16 +70,16 @@
                 <th scope="col">나트륨(mg)</th>
                 <th scope="col">탄수화물(g)</th>
                 <th scope="col">지방(g)</th>
-                <th scope="col">당류(g)</th>
+                <th scope="col">콜레스테롤(mg)</th>
                 <th scope="col">단백질(g)</th>
             </tr>
         </thead>
-        <tbody id="info_food">
+        <tbody id="info_record">
         </tbody>
     </table>
     </p>
 
-    <a href="{{url_for('home.barcode_record')}}">저장하기</a>
+    <a href="{{url_for('home.barcode_record', my_code=my_code )}}">저장하기{{my_code}}</a>
 
 </body>
 
