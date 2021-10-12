@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, request, jsonify, Blueprint, Response
 import os
 import cv2
 import numpy as np
@@ -10,11 +10,14 @@ import pyzbar.pyzbar as pyzbar
 import json
 import time
 from datetime import datetime, date
+from datetime import timedelta
 from flask_login import current_user
+from .user import *
 
 from .models import *
 # from . import db
 from sqlalchemy import cast, DATE
+from sqlalchemy.sql import func
 
 # from pymongo import MongoClient
 
@@ -50,34 +53,13 @@ def allowed_file(filename):
 def html(content):
    return '<html><head></head><body>' + content + '</body></html>'
 
-# 날짜별 기록
-@home.route('/record')
-def record():
-    # user = User.query.get(current_user.id)
-    # print(user)
-
-    # today = datetime.today()
-    # print(today)
-
-    record_list = Record.query.filter_by(user_id=current_user.id) # 동일한 유저
-    record_list.filter(cast(Record.date, DATE)==date.today()).all() # 같은 날짜
-    print(record_list)
-
-    food_list = []
-    for record in record_list:
-        # print(record.id, '\n\n')
-        food = Food.query.filter_by(record_id=record.id)
-        food_list += food
-
-    print("\n\nfood_list:", food_list)
-    return render_template('user/record.html', food_list=food_list)
 
 # 상세 기록 정보
 @home.route('/food_record')
 def food_record():
     with open('./static/nutrition.json') as f:
         nutrition_data = json.load(f)
-        print(json.dumps(nutrition_data))
+        # print(json.dumps(nutrition_data))
 
     new_record = Record(user_id=current_user.id, date=datetime.now())
     db.session.add(new_record)
@@ -93,78 +75,56 @@ def food_record():
                                 fat=i['fat'], 
                                 cholesterol=i['cholesterol'],
                                 protein=i['protein'])
+
                 db.session.add(new_food)
                 db.session.commit()
+                
+                t_record = Record.query.order_by(Record.id.desc()).first()
+                print(t_record.t_calories)
+                t_record.t_calories += i['calories']
+                t_record.t_sodium += i['sodium']
+                t_record.t_carbohydrate += i['carbohydrate']
+                t_record.t_fat += i['fat']
+                t_record.t_cholesterol += i['cholesterol']
+                t_record.t_protein += i['protein']
+                db.session.commit()
 
-    food_list = Food.query.filter_by(record_id=new_record.id).all()
-    # food_list = Food.query.filter_by(record_id = )
-    # food_list = Food.query.filter_by
-    print(food_list) # <Food 29>, <Food 30>
+                # t_date = datetime.today().date()
+                # food = Record.query.get(Record.user_id==current_user.id, Record.date>=t_date)
+                # food.t_calories += i['calories']
+                # db.session.commit()
 
-    food_total = {}
-    food_total['calories'] = food_total['sodium'] = food_total['carbohydrate'] \
-    = food_total['fat'] = food_total['cholesterol'] = food_total['protein'] = 0
-    for food in food_list:
-        print("\n", food.calories)
-        food_total['calories'] += food.calories
-        food_total['sodium'] += food.sodium
-        food_total['carbohydrate'] += food.carbohydrate
-        food_total['fat'] += food.fat
-        food_total['cholesterol'] += food.cholesterol
-        food_total['protein'] += food.protein
 
-    # print(food_total)
+
+    # food_list = Food.query.filter_by(record_id=new_record.id).all()
+    
     # {'calories': 74.0, 'sodium': 102.0, 'carbohydrate': 17.0, 'fat': 0.4, 'cholesterol': 0.0, 'protein': 3.6999999999999997}
 
-    return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
-
-
-#     foods = list(db.person.find({},{'_id':False}))
-    
-#     total_calories = 0
-#     total_sodium = 0
-#     total_carbohydrate = 0
-#     total_fat = 0
-#     total_cholesterol = 0
-#     total_protein = 0
-    
-#     food_list = []
-#     for food in foods:
-#         food_name = food['name']
-#         # food = db.food.find_one({'name': food_name})
-#         food_list.append(food)
-
-#         # 전체 계산
-#         total_calories += food['calories']
-#         total_sodium += food['sodium']
-#         total_carbohydrate += food['carbohydrate']
-#         total_fat += food['fat']
-#         total_cholesterol += food['cholesterol']
-#         total_protein += food['protein']
-#         total_protein = round(total_protein, 3)
-#     return render_template('home/record.html', food_list=food_list, total_calories=total_calories, total_sodium=total_sodium,
-#                             total_carbohydrate=total_carbohydrate, total_fat=total_fat, total_cholesterol=total_cholesterol,
-#                             total_protein=total_protein)
+    # return render_template('user/record.html', date = date)
+    return Response(record())
 
 @home.route('/barcode', methods=['GET'])
 def barcode():
     cap = cv2.VideoCapture(0)
-    cap.set(3, 640)
-    cap.set(4, 480)
 
     while True:
         success, frame = cap.read()
 
+        global my_code
         for code in pyzbar.decode(frame):
             my_code = code.data.decode('utf-8')
             if my_code:
                 print("인식 성공 : ", my_code)
                 cv2.destroyAllWindows()
                 return render_template('home/barcode.html', my_code=my_code)
-            else:
-                pass
         cv2.imshow('Testing-code-scan', frame)
-        cv2.waitKey(1)
+        # cv2.waitKey(1)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q') or key == 27: # 'q' 이거나 'esc' 이면 종료
+            cv2.destroyAllWindows()
+            break
+    return render_template('home/main.html')
+        
 
 @home.route('/barcode_record')
 def barcode_record(my_code):
@@ -216,7 +176,20 @@ def intro():
 
 @home.route('/main')
 def main():
-    return render_template('home/main.html')
+    t_date = datetime.today().date()
+    record_list = Record.query.filter(Record.user_id==current_user.id, Record.date>=t_date).all()
+    t_nutrition = {}
+    t_nutrition['calories'] = t_nutrition['sodium'] = t_nutrition['carbohydrate'] \
+    = t_nutrition['fat'] = t_nutrition['cholesterol'] = t_nutrition['protein'] = 0
+    for record in record_list:
+        t_nutrition['calories'] += record.t_calories
+        t_nutrition['sodium'] += record.t_sodium
+        t_nutrition['carbohydrate'] += record.t_carbohydrate
+        t_nutrition['fat'] += record.t_fat
+        t_nutrition['cholesterol'] += record.t_cholesterol
+        t_nutrition['protein'] += record.t_protein
+
+    return render_template('home/main.html', t_nutrition=t_nutrition)
 
 # @home.route('/camera')
 # def camera():

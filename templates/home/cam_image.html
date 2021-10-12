@@ -32,6 +32,11 @@
         <div class="row">
             <div class="col-lg-8  offset-lg-2" style="background-image: url(../static/images/backgroundimage.jpg)">
                 <h3 class="mt-5, title">사진촬영</h3>
+
+                <form action="/predict" method="post" enctype="multipart/form-data">
+                    <input type="image" src="static/{{image_path}}" name="file"/>
+                    <input type="submit" value="Upload">
+                </form>
     
                 <button type="button" class="btn btn-light"><a href="{{ url_for('home.upload')}}">업로드</a></button>
                 <button type="button" class="btn btn-light"><a href="{{ url_for('cam.retry') }}">다시찍기</a></button>           

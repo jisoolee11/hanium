@@ -25,6 +25,18 @@
             "fat": 23,
             "sugars": 7,
             "protein": 6
+        },
+        {
+            "id": 3,
+            "barcode": "8801043036078",
+            "name": "김",
+            "size": 90,
+            "calories": 455,
+            "sodium": 650,
+            "carbohydrate": 56,
+            "fat": 23,
+            "cholesterol": 7,
+            "protein": 6
         }
     ]
 }

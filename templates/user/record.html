@@ -11,8 +11,13 @@
 <body>
     {% include 'home/side.html' %}
 
-    {% for food in food_list %}
-        {{food.name}}
+    {% for date in dates %}
+        <a href="{{url_for('user.day_record', date=date)}}">{{date}}</a>
+    {% endfor %}
+    <br>
+    {% for record in record_list[::-1] %}
+        <a href="{{url_for('user.food_record', record_id=record.id)}}">{{record.id}}</a>
+        {{record.date}}
         <br>
     {% endfor %}
 </body>
