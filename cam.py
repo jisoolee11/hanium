@@ -28,12 +28,12 @@ def gen_frames():  # generate frame by frame from camera
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame1 + b'\r\n')
 
-            for code in pyzbar.decode(frame):
-                my_code = code.data.decode('utf-8')
-                if my_code:
-                    print(my_code)
-                    camera.release()
-                    return
+            # for code in pyzbar.decode(frame):
+            #     my_code = code.data.decode('utf-8')
+            #     if my_code:
+            #         print(my_code)
+            #         camera.release()
+            #         return
                     # yield None
                     # return render_template('home/main.html')
                 
@@ -85,10 +85,12 @@ def tasks():
     if request.method == 'POST':
         if request.form.get('capture'):
             now = datetime.datetime.now()
-            p = os.path.sep.join(['static/shots', "shot_{}.jpg".format(str(now).replace(":",''))])
+            img_name = "shot_{}.jpg".format(str(now).replace(":",''))
+            print(img_name)
+            p = os.path.sep.join(['static/shots', img_name])
             cv2.imwrite(p, frame)
 
-    return render_template('home/cam_image.html', image_path=p[7:].replace("\\", "/"))
+    return render_template('home/cam_image.html', image_path=p[7:].replace("\\", "/"), img_name=img_name)
 
 @cam.route('/retry')
 def retry():

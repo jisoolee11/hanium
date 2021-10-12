@@ -26,7 +26,7 @@
     function showNutrition() {
       $.ajax({
         type: "GET",
-        url: "./static/nutrition.json",
+        url: "../static/nutrition.json",
         success: function (response) {
           let nutrition = response['nutrition']
           let products = "{{products|safe}}"
