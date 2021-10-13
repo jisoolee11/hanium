@@ -5,18 +5,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="{{ url_for('static', filename='home/main.css') }}"></script>
+  <link rel="stylesheet" type="text/css" href="../../static/home/main.css"/>
   <title>메인페이지</title>
 </head>
 
-<body>
+<body onload="date()">
   {% include 'home/side.html' %}
-  <h1>메인페이지</h1>
-  {{current_user.name}}
+
+  <div class="main_intro">안녕하세요. {{current_user.name}}님!
+      <br>오늘의 섭취 영양정보 입니다.
+  </div>
+  <div id="main_date" class="main_date"></div>
   {{t_nutrition}}
-  
-  <!-- <a href="{{ url_for('user.record') }}">식단기록</a>
-  <a href="{{ url_for('user.bmi') }}">BMI</a>
-  <a href="{{ url_for('auth.logout') }}">로그아웃</a> -->
+  <div class="graph">
+    <span>75%</span>
+  </div>
+
+  <script>
+      function date() {
+          var today = new Date();
+          var week = ["일","월","화","수","목","금","토"];
+          document.getElementById("main_date").innerHTML=today.getFullYear()+"."+
+              eval(today.getMonth()+1)+"."+today.getDate()+" "+"("+week[today.getDay()]+")";
+      }
+      
+  </script>
 </body>
 
 </html>

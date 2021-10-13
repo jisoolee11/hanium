@@ -232,7 +232,7 @@ def main():
         t_nutrition['cholesterol'] += record.t_cholesterol
         t_nutrition['protein'] += record.t_protein
 
-    return render_template('home/main.html', t_nutrition=t_nutrition)
+    return render_template('home/main.html', t_nutrition=t_nutrition, t_date=t_date)
 
 # @home.route('/camera')
 # def camera():
