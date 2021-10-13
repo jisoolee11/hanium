@@ -1,0 +1,33 @@
+body {
+    background-image: url('main_wave.png');
+    background-color: #f4f5fa;
+}
+
+.cam_name {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+.cam_intro {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+}
+
+.cam_img {
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.cam_btn {
+    background-color: #6bc57d;
+    padding: 5px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}

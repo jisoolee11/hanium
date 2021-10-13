@@ -19,6 +19,51 @@ body {
 
 .graph {
     height: 40px;
+    margin: 0 0 30px;
     background: #ccc;
     border-radius: 40px;
+}
+
+.graph span {
+    display: block;
+    padding: 0 10px;
+    height: 40px;
+    line-height: 40px;
+    text-align: right;
+    border-radius: 40px;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.graph.stack1 span {
+    background-color: violet;
+    animation: stack1 2s 1;
+}
+
+.graph.stack2 span {
+    background-color: skyblue;
+    animation: stack2 2s 1;
+}
+
+.graph.stack3 span {
+    background-color: orange;
+    animation: stack3 2s 1;
+}
+
+@keyframes stack1 {
+    0% {width: 0; color: rgba(255, 255, 255, 0);}
+    40% {color: rgba(255, 255, 255, 0);}
+    /* 100% {width: 75%;} */
+}
+
+@keyframes stack2 {
+    0% {width: 0; color: rgba(255, 255, 255, 0);}
+    40% {color: rgba(255, 255, 255, 0);}
+    100% {width: 60%;}
+}
+
+@keyframes stack3 {
+    0% {width: 0; color: rgba(255, 255, 255, 0);}
+    40% {color: rgba(255, 255, 255, 0);}
+    100% {width: 25%;}
 }
