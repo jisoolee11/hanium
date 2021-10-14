@@ -2,20 +2,12 @@
 <html>
 
 <head>
-
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="../../static/home/cam_predict.css"/>
   <title>yolo image recognition</title>
 
   <script>
@@ -48,33 +40,33 @@
                 let protein = nutrition[obj['id']]['protein']
 
                 let nutrition_html = `<tr>
-                                    <td style="font-size: 32px; font-weight:bold;">식품명</td>
-                                    <td style="font-size: 32px; font-weight:bold;">${name}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>열량(kcal)</td>
-                                    <td>${calories}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>나트륨(mg)</td>
-                                    <td>${sodium}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>탄수화물(mg)</td>
-                                    <td>${carbohydrate}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>지방(g)</td>
-                                    <td>${fat}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>콜레스테롤(mg)</td>  
-                                    <td>${cholesterol}</td>
-                                  </tr>
-                                  <tr>  
-                                    <td>단백질(g)</td>
-                                    <td>${protein}</td>                
-                              </tr>`
+                                        <td style="font-size: 25px; font-weight:bold;">식품명</td>
+                                        <td style="font-size: 25px; font-weight:bold;">${name}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>열량(kcal)</td>
+                                        <td>${calories}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>나트륨(mg)</td>
+                                        <td>${sodium}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>탄수화물(mg)</td>
+                                        <td>${carbohydrate}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>지방(g)</td>
+                                        <td>${fat}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>콜레스테롤(mg)</td>  
+                                        <td>${cholesterol}</td>
+                                      </tr>
+                                      <tr>  
+                                        <td>단백질(g)</td>
+                                        <td>${protein}</td>                
+                                      </tr>`
                 $('#info_nutrition').append(nutrition_html)
 
                 t_calories += calories;
@@ -110,81 +102,35 @@
                                   <tr>
                                     <td>총 단백질(g)</td>  
                                     <td>${parseFloat(t_protein.toFixed(2))}</td>
-                              </tr>`
+                                  </tr><br>`
           $('#t_info_nutrition').append(t_nutrition_html)
         }
       })
     }
   </script>
-  <style>
-    .background {
-      background-image: url('../../static/wave2.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    .title {
-          margin-left: 10px;
-          margin-top: 10px;
-          margin-bottom: 50px;
-          height: 50px;
-        }
-
-    .name {
-      font-weight: 1000;
-      font-size: 50px;
-    }
-
-    tbody {
-      margin-bottom: 30px;
-    }
-  </style>
 </head>
 
-<body class="background">
-  <div class="container">
+<body>
     {% include 'home/side.html' %}
-
-    <div class="title">
-      <h1 class="name">인식 결과</h1>
-
+    <div class="cam_predict_name">인식 결과</div>
+    <div class="cam_predict_intro">촬영한 음식들을 인식하고 영양정보를 보여줍니다.</div>
+    <div class="cam_predict_image"><img src="{{ url_for('static', filename = user_image)}}" alt="User Image" class="cam_predict_img"></div>
+    
+    <div>
+    <table class="table">
+      <tbody id="info_nutrition">
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <hr>
+    <p style="font-size: 25px; font-weight: bold; text-align: center;">총 영양정보</p>
+    <table class="table">
+      <tbody id="t_info_nutrition">
+      </tbody>
+    </table>
     </div>
-
-    <div class="row">
-      <div class="col-sm">
-        <span class="border border-primary">
-          <img src="{{ url_for('static', filename = user_image)}}" alt="User Image" width="500" height="600"
-            class="img-thumbnail">
-        </span>
-      </div>
-
-      <!-- <div class="col-sm">
-        <h1 id="labels">Found this</h1>
-        {% for product in products %}
-        <h2>{{product}}</h2>
-        
-        {% endfor %}
-      </div> -->
-
-      
-
-      <p>
-      <table class="table">
-        <tbody id="info_nutrition">
-        </tbody>
-      </table>
-      </p>
-      <br>
-      <p>
-      <p style="font-size: 32px; font-weight: bold;">&nbsp;총 영양정보</p>
-      <table class="table">
-        <tbody id="t_info_nutrition">
-        </tbody>
-      </table>
-      </p>
-    </div>
-  </div>
-    <a href="{{url_for('home.food_record')}}">저장하기</a>
+    <div class="save_btn"><a href="{{url_for('home.food_record')}}" style="text-decoration: none; color: white">저장하기</a></div>
 </body>
 
 </html>
