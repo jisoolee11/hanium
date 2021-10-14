@@ -1,22 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>record</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/home/cam_predict.css" />
+    <title>식단 기록 상세</title>
 </head>
 
 <body>
-
     {% include 'home/side.html' %}
-
-    <h1>식단 기록 상세</h1>
-    {% for food, num in food_total.items() %}
-    {{food}}: {{num}}
-    {% endfor %}
-   
+    <div class="cam_predict_name">식단 기록 상세</div>
+    
+    <div>
+        <table class="table">
+            <tbody id="info_nutrition">
+                {% for food in food_list %}
+                <tr>
+                    <td style="font-size: 25px; font-weight:bold;">식품명</td>
+                    <td style="font-size: 25px; font-weight:bold;">{{food.name}}</td>
+                </tr>
+                <tr>
+                    <td>열량(kcal)</td>
+                    <td>{{food.calories}}</td>
+                </tr>
+                <tr>
+                    <td>나트륨(mg)</td>
+                    <td>{{food.sodium}}</td>
+                </tr>
+                <tr>
+                    <td>탄수화물(mg)</td>
+                    <td>{{food.carbohydrate}}</td>
+                </tr>
+                <tr>
+                    <td>지방(g)</td>
+                    <td>{{food.fat}}</td>
+                </tr>
+                <tr>
+                    <td>콜레스테롤(mg)</td>
+                    <td>{{food.cholesterol}}</td>
+                </tr>
+                <tr>
+                    <td>단백질(g)</td>
+                    <td>{{food.protein}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <hr>
+        <p style="font-size: 25px; font-weight: bold; text-align: center;">총 영양정보</p>
+        <table class="table">
+            <tbody id="info_nutrition">
+                {% for food, num in food_total.items() %}
+                <tr>
+                    <td>{{food}}</td>
+                    <td>{{num}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

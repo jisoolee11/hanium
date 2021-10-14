@@ -74,8 +74,6 @@ def food_record(record_id):
         food_total['protein'] += food.protein
 
     print(food_total)
-
-    
     return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
 
 @user.route('/bmi')
