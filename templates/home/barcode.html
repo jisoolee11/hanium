@@ -5,16 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../../static/home/barcode.css"/>
+    <title>yolo image recognition</title>
 
     <script>
         $(document).ready(function(){
@@ -42,14 +35,33 @@
                             let protein = food[obj['id']]['protein']
 
                             let record_html = `<tr>
-                                <td>${name}</td>
-                                <td>${calories}</td>
-                                <td>${sodium}</td>
-                                <td>${carbohydrate}</td>
-                                <td>${fat}</td>
-                                <td>${cholesterol}</td>
-                                <td>${protein}</td>                
-                            </tr>`
+                                                    <td style="font-size: 25px; font-weight:bold;">식품명</td>
+                                                    <td style="font-size: 25px; font-weight:bold;">${name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>열량(kcal)</td>
+                                                    <td>${calories}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>나트륨(mg)</td>
+                                                    <td>${sodium}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>탄수화물(mg)</td>
+                                                    <td>${carbohydrate}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>지방(g)</td>
+                                                    <td>${fat}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>콜레스테롤(mg)</td>  
+                                                    <td>${cholesterol}</td>
+                                                </tr>
+                                                <tr>  
+                                                    <td>단백질(g)</td>
+                                                    <td>${protein}</td>                
+                                                </tr>`
                             $('#info_record').append(record_html)
                         }
                     })
@@ -61,26 +73,15 @@
 
 <body>
     {% include 'home/side.html' %}
-    <p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">식품</th>
-                <th scope="col">열량(kcal)</th>
-                <th scope="col">나트륨(mg)</th>
-                <th scope="col">탄수화물(g)</th>
-                <th scope="col">지방(g)</th>
-                <th scope="col">콜레스테롤(mg)</th>
-                <th scope="col">단백질(g)</th>
-            </tr>
-        </thead>
-        <tbody id="info_record">
-        </tbody>
-    </table>
-    </p>
-
-    <a href="{{url_for('home.barcode_record', my_code=my_code )}}">저장하기{{my_code}}</a>
-
+    <div class="barcode_name">바코드 인식 결과</div>
+    <div class="barcode_intro">바코드를 인식하고 영양정보를 보여줍니다.</div>
+    <div>
+        <table class="table">
+            <tbody id="info_record">
+            </tbody>
+        </table>
+    </div>
+    <div class="save_btn"><a href="{{url_for('home.barcode_record', my_code=my_code)}}" style="text-decoration: none; color: white">저장하기</a></div>
 </body>
 
 </html>

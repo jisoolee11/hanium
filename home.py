@@ -116,6 +116,7 @@ def barcode():
             if my_code:
                 print("인식 성공 : ", my_code)
                 cv2.destroyAllWindows()
+                cap.release()
                 return render_template('home/barcode.html', my_code=my_code)
         cv2.imshow('Testing-code-scan', frame)
         # cv2.waitKey(1)
