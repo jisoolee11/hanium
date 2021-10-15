@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/home/cam_predict.css" />
     <title>무게 입력</title>
 
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             showNutrition();
         });
@@ -56,7 +56,7 @@
                 }
             })
         }
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -69,10 +69,10 @@
             class="cam_predict_img"></div>
 
         <div>
-            <table class="table">
-                <tbody id="info_nutrition">
-                </tbody>
-            </table>
+        {% for food in products %}
+        {{food}}를 인식했습니다!
+        <input type="number" name="{{food}}" value="100" />
+        {% endfor %}
         </div>
         <div class="save_btn"><input type="submit" class="save_input" value="결과보기"></div>
     </form>

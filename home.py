@@ -250,10 +250,19 @@ def upload():
 
 @home.route("/result", methods = ['GET','POST'])
 def result():
-    return render_template('home/predict.html', products=products, user_image='images/output/' + filename)
+    if request.method == 'POST':
+        food_weight = []
+        for food in products:
+            weight = request.form.get(food)
+            food_weight.append(weight)
+        print(food_weight)
+    return render_template('home/predict.html', products=products, user_image='images/output/' + filename, food_weight=food_weight)
 
 @home.route("/predict", methods = ['GET','POST'])
 def predict():
+    with open('./static/nutrition.json') as f:
+        nutrition_data = json.load(f)
+
     global products, user_image
     if request.method == 'POST':
         file = request.files['file']
@@ -311,7 +320,9 @@ def predict():
                 objects=[]
                 for i in range(len(class_numbers)):
                     print(labels[int(class_numbers[i])])
-                    objects.append(labels[int(class_numbers[i])])
+                    for n in nutrition_data['nutrition']:
+                        if n['name'] == labels[int(class_numbers[i])]:
+                            objects.append(labels[int(class_numbers[i])])
                 # Saving found labels
                 """with open('found_labels.txt', 'w') as f:
                     for i in range(len(class_numbers)):
