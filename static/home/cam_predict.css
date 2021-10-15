@@ -48,3 +48,12 @@ td {
     font-weight: bold;
     text-align: center;
 }
+
+.save_input {
+    background-color: #6bc57d;
+    border: 0;
+    color: #fff;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
