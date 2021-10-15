@@ -5,21 +5,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/home/cam_predict.css" />
     <title>record</title>
+
+    <style>
+        a {
+            text-decoration-line: none;
+        }
+        
+        .date {
+            display: flex;
+            justify-content: space-around;
+            font-size: 15px;
+        }
+
+        .time-record {
+            width: 80%;
+            height: 50%;
+            background-color: #EAEAEA;
+            border-radius: 10px;
+            margin: auto;
+            text-align: center;
+            line-height: 200%;
+        }
+    </style>
 </head>
 
 <body>
     {% include 'home/side.html' %}
+    <div class="cam_predict_name">식단 기록</div>
 
     {% for date in dates %}
-        <a href="{{url_for('user.day_record', date=date)}}">{{date}}</a>
+    <a class="date" href="{{url_for('user.day_record', date=date)}}">{{date}}</a>
     {% endfor %}
     <br>
-    {% for record in record_list[::-1] %}
+
+    <div class="time-record">
+        {% for record in record_list[::-1] %}
         <a href="{{url_for('user.food_record', record_id=record.id)}}">{{record.id}}</a>
         {{record.date}}
         <br>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </body>
 
 </html>
