@@ -248,10 +248,14 @@ def main():
 def upload():
     return render_template('home/upload.html')
 
+@home.route("/upload_result")
+def upload_result():
+    return render_template('home/predict.html', products=products, user_image=user_image)
+
 
 @home.route("/predict", methods = ['GET','POST'])
 def predict():
-    global products
+    global products, user_image
     if request.method == 'POST':
         file = request.files['file']
         try:
@@ -333,8 +337,9 @@ def predict():
 
                 products = list(set(objects))
                 print(products)
+                user_image = 'images/output/' + filename
                     
-                return render_template('home/predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
+                return render_template('home/weights.html', products = list(set(objects)), user_image=user_image)
                 
         except Exception as e:
             return "Unable to read the file. Please check if the file extension is correct."
