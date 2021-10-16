@@ -258,6 +258,16 @@ def result():
         print(food_weight)
     return render_template('home/predict.html', products=products, user_image='images/output/' + filename, food_weight=food_weight)
 
+@home.route("/result_cam", methods = ['GET','POST'])
+def result_cam():
+    if request.method == 'POST':
+        food_weight = []
+        for food in products:
+            weight = request.form.get(food)
+            food_weight.append(weight)
+        print(food_weight)
+    return render_template('home/cam_predict.html', products=products, user_image='images/output/' + filename, food_weight=food_weight)
+
 @home.route("/predict", methods = ['GET','POST'])
 def predict():
     with open('./static/nutrition.json') as f:
@@ -356,7 +366,10 @@ def predict():
 
 @home.route("/cam_predict/<img_name>")
 def cam_predict(img_name):
-    global products
+    with open('./static/nutrition.json') as f:
+        nutrition_data = json.load(f)
+
+    global products, user_image, filename
     # if request.method == 'POST':
     #     file = request.files['file']
     try:
@@ -411,7 +424,9 @@ def cam_predict(img_name):
         objects=[]
         for i in range(len(class_numbers)):
             print(labels[int(class_numbers[i])])
-            objects.append(labels[int(class_numbers[i])])
+            for n in nutrition_data['nutrition']:
+                if n['name'] == labels[int(class_numbers[i])]:
+                    objects.append(labels[int(class_numbers[i])])
         # Saving found labels
         """with open('found_labels.txt', 'w') as f:
             for i in range(len(class_numbers)):
@@ -438,7 +453,7 @@ def cam_predict(img_name):
         products = list(set(objects))
         print(products)
             
-        return render_template('home/cam_predict.html', products = list(set(objects)), user_image = 'images/output/' + filename)
+        return render_template('home/weights_cam.html', products = list(set(objects)), user_image = 'images/output/' + filename)
             
     except Exception as e:
         return "Unable to read the file. Please check if the file extension is correct."

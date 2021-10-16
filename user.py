@@ -31,7 +31,22 @@ def record():
 
     # record_list = Record.query.filter_by(user_id=current_user.id) # 동일한 유저
     record_list = Record.query.filter(Record.user_id==current_user.id, Record.date>=t_date) # 동일한 유저
-    print(record_list)
+    # food_list = Food.query.filter_by(record_id==19)
+    # print(food_list)
+
+    
+    record_lists = []
+    record_id = []
+    for i in record_list:
+        record_food = Food.query.filter(Food.record_id==i.id)
+        record_id.append(i.id)
+        record_foods = []
+        for r in record_food:
+            record_foods.append(r.name)
+        record_lists.append(record_foods)
+
+    record_list_food = dict(zip(record_id, record_lists))
+    print(record_list_food)
     # record_list.filter(cast(Record.date, DATE)==date.today()).all() # 같은 날짜
     # print(record_list)
 
@@ -42,7 +57,7 @@ def record():
     #     food_list += food
 
     # print("\n\nfood_list:", food_list)
-    return render_template('user/record.html', record_list=record_list, dates=dates)
+    return render_template('user/record.html', record_list=record_list, dates=dates, date=t_date, record_list_food=record_list_food)
 
 @user.route('/day_record/<date>')
 def day_record(date):
@@ -55,7 +70,19 @@ def day_record(date):
 
     print(type(t_date))
     record_list = Record.query.filter(Record.user_id==current_user.id, Record.date>=date, Record.date<date_obj)
-    return render_template('user/record.html', record_list=record_list, dates=dates)
+
+    record_lists = []
+    record_id = []
+    for i in record_list:
+        record_food = Food.query.filter(Food.record_id==i.id)
+        record_id.append(i.id)
+        record_foods = []
+        for r in record_food:
+            record_foods.append(r.name)
+        record_lists.append(record_foods)
+
+    record_list_food = dict(zip(record_id, record_lists))
+    return render_template('user/record.html', record_list=record_list, dates=dates, date=date, record_list_food=record_list_food)
 
 @user.route('/record/<int:record_id>')
 def food_record(record_id):
