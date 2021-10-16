@@ -64,17 +64,19 @@ def food_record():
     new_record = Record(user_id=current_user.id, date=datetime.now())
     db.session.add(new_record)
     db.session.commit()
-    for food in products:
+    print(food_weight)
+    for index, food in enumerate(products):
         for i in nutrition_data['nutrition']:
             if i['name'] == food:
                 new_food = Food(record_id=new_record.id,
                                 name=i['name'],
-                                calories=i['calories'], 
-                                sodium=i['sodium'], 
-                                carbohydrate=i['carbohydrate'], 
-                                fat=i['fat'], 
-                                cholesterol=i['cholesterol'],
-                                protein=i['protein'])
+                                weight=food_weight[index],
+                                calories=i['calories']*int(food_weight[index])/100, 
+                                sodium=i['sodium']*int(food_weight[index])/100, 
+                                carbohydrate=i['carbohydrate']*int(food_weight[index])/100, 
+                                fat=i['fat']*int(food_weight[index])/100, 
+                                cholesterol=i['cholesterol']*int(food_weight[index])/100,
+                                protein=i['protein']*int(food_weight[index])/100)
 
                 db.session.add(new_food)
                 db.session.commit()
@@ -140,6 +142,7 @@ def barcode_record(my_code):
         if i['barcode'] == my_code:
             new_food = Food(record_id=new_record.id,
                             name=i['name'],
+                            weight=i['weight'],
                             calories=i['calories'], 
                             sodium=i['sodium'], 
                             carbohydrate=i['carbohydrate'], 
@@ -250,6 +253,7 @@ def upload():
 
 @home.route("/result", methods = ['GET','POST'])
 def result():
+    global food_weight
     if request.method == 'POST':
         food_weight = []
         for food in products:
@@ -260,6 +264,7 @@ def result():
 
 @home.route("/result_cam", methods = ['GET','POST'])
 def result_cam():
+    global food_weight
     if request.method == 'POST':
         food_weight = []
         for food in products:

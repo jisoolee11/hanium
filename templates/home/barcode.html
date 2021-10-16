@@ -27,6 +27,7 @@
                         if (obj['barcode'] === my_code) {
                             console.log('있음');
                             let name = food[obj['id']]['name']
+                            let weight = food[obj['id']]['weight']
                             let calories = food[obj['id']]['calories']
                             let sodium = food[obj['id']]['sodium']
                             let carbohydrate = food[obj['id']]['carbohydrate']
@@ -35,8 +36,8 @@
                             let protein = food[obj['id']]['protein']
 
                             let record_html = `<tr>
-                                                    <td style="font-size: 25px; font-weight:bold;">식품명</td>
-                                                    <td style="font-size: 25px; font-weight:bold;">${name}</td>
+                                                    <td style="font-size: 25px; font-weight:bold;">식품명/내용량</td>
+                                                    <td style="font-size: 25px; font-weight:bold;">${name}/${weight}g</td>
                                                 </tr>
                                                 <tr>
                                                     <td>열량(kcal)</td>

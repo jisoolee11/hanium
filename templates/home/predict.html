@@ -36,8 +36,8 @@
           for (let product of products) {
             nutrition.filter(function (obj) {
               if (obj['name'] === product) {
-                let weight = Number(food_weight[products.indexOf(product)])
                 let name = nutrition[obj['id']]['name']
+                let weight = Number(food_weight[products.indexOf(product)])
                 let calories = nutrition[obj['id']]['calories'] * weight/100
                 let sodium = nutrition[obj['id']]['sodium'] * weight/100
                 let carbohydrate = nutrition[obj['id']]['carbohydrate'] * weight/100
@@ -46,8 +46,8 @@
                 let protein = nutrition[obj['id']]['protein'] * weight/100
 
                 let nutrition_html = `<tr>
-                                        <td style="font-size: 25px; font-weight:bold;">식품명</td>
-                                        <td style="font-size: 25px; font-weight:bold;">${name}</td>
+                                        <td style="font-size: 25px; font-weight:bold;">식품명/무게</td>
+                                        <td style="font-size: 25px; font-weight:bold;">${name}/${weight}g</td>
                                       </tr>
                                       <tr>
                                         <td>열량(kcal)</td>
@@ -138,10 +138,10 @@
     </div>
     <div class="save_btn"><a href="{{url_for('home.food_record')}}" style="text-decoration: none; color: white">저장하기</a></div>
 
-    <script>
+    <!-- <script>
       var number = $('#food-number').val()
       console.log("\n\nnumber:", number)
-  </script>
+  </script> -->
 </body>
 
 </html>
