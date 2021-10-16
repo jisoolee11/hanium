@@ -100,8 +100,12 @@ def food_record(record_id):
         food_total['cholesterol'] += food.cholesterol
         food_total['protein'] += food.protein
 
+    record = Record.query.filter(Record.id==record_id)
+    for i in record:
+        record_image = i.image
+
     print(food_total)
-    return render_template('user/food_record.html', food_list=food_list, food_total=food_total)
+    return render_template('user/food_record.html', food_list=food_list, food_total=food_total, record_image=record_image)
 
 @user.route('/bmi')
 def bmi():

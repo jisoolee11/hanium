@@ -61,7 +61,7 @@ def food_record():
         nutrition_data = json.load(f)
         # print(json.dumps(nutrition_data))
 
-    new_record = Record(user_id=current_user.id, date=datetime.now())
+    new_record = Record(user_id=current_user.id, date=datetime.now(), image=filename)
     db.session.add(new_record)
     db.session.commit()
     print(food_weight)
