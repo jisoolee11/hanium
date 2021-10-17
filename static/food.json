@@ -1,54 +1,29 @@
 {
     "food": [
+
         {
             "id": 0,
-            "barcode": "885225566",
-            "name": "banana",
-            "cal": 50,
-            "fat": 2
+            "barcode": "8801045570082",
+            "name": "jin ramen(spicy)",
+            "weight": 65,
+            "calories": 280,
+            "sodium": 1140,
+            "carbohydrate": 44,
+            "fat": 9,
+            "cholesterol": 0,
+            "protein": 6
         },
         {
             "id": 1,
-            "barcode": "885551225566",
-            "name": "apple",
-            "cal": 80,
-            "fat": 4
-        },
-        {
-            "id": 2,
-            "barcode": "8801043036078",
-            "name": "spicy",
-            "weight": 90,
-            "calories": 455,
-            "sodium": 650,
-            "carbohydrate": 56,
-            "fat": 23,
-            "cholesterol": 7,
-            "protein": 6
-        },
-        {
-            "id": 3,
-            "barcode": "88010430360",
-            "name": "kim",
-            "weight": 90,
-            "calories": 455,
-            "sodium": 650,
-            "carbohydrate": 56,
-            "fat": 23,
-            "cholesterol": 7,
-            "protein": 6
-        },
-        {
-            "id": 4,
-            "barcode": "8809511985699",
-            "name": "mask",
-            "weight": 90,
-            "calories": 455,
-            "sodium": 650,
-            "carbohydrate": 56,
-            "fat": 23,
-            "cholesterol": 7,
-            "protein": 6
+            "barcode": "8801115134237",
+            "name": "seoul chocolate milk",
+            "weight": 200,
+            "calories": 135,
+            "sodium": 90,
+            "carbohydrate": 22,
+            "fat": 3,
+            "cholesterol": 10,
+            "protein": 5
         }
     ]
 }
