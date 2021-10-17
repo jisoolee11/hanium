@@ -19,17 +19,17 @@ body {
 }
 
 .graph {
-    height: 30px;
+    height: 25px;
     margin: 0 0 20px;
-    background: #ccc;
+    background: rgba(204, 204, 204, 0.3);
     border-radius: 40px;
 }
 
 .graph span {
     display: block;
     padding: 0 10px;
-    height: 30px;
-    line-height: 30px;
+    height: 25px;
+    line-height: 25px;
     text-align: right;
     border-radius: 40px;
     box-sizing: border-box;
