@@ -108,7 +108,7 @@ def food_record():
 @home.route('/barcode', methods=['GET'])
 def barcode():
     cap = cv2.VideoCapture(0)
-    cap.set(3, 320)
+    cap.set(3, 240)
     cap.set(4, 240)
 
     while True:
